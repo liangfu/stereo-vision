@@ -1,0 +1,7 @@
+*.files
+*.out
+android/lib/
+android/gen/
+android/libs/
+android/bin/
+android/obj/
