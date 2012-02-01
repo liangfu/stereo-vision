@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.view.Window;
 
-public class TVReality extends Activity {
+public class StereoVision extends Activity {
 	// private static final String IMAGE_DIRECTORY = "/sdcard/DCIM/Camera";
 	// private static final int ACTIVITY_SELECT_CAMERA = 0;
 	// private static final int ACTIVITY_SELECT_IMAGE = 1;
@@ -35,7 +35,7 @@ public class TVReality extends Activity {
 	// private ImageView mImageView;
     // private static final String TAG = "Sample::Activity";
 
-    public TVReality() {
+    public StereoVision() {
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 

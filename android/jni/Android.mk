@@ -41,7 +41,7 @@ LOCAL_SRC_FILES := \
         cxcore/src/cxtables.cpp \
         cxcore/src/cxutils.cpp
 
-include $(BUILD_STATIC_LIBRARY)
+include $(PREBUILD_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
@@ -116,9 +116,9 @@ LOCAL_SRC_FILES := \
         cv/src/cvtemplmatch.cpp \
         cv/src/cvthresh.cpp \
         cv/src/cvundistort.cpp \
-        cv/src/cvutils.cpp \
+        cv/src/cvutils.cpp
 
-include $(BUILD_STATIC_LIBRARY)
+include $(PREBUILD_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
@@ -126,8 +126,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := tvr_jni
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/cxcore/include \
-        $(LOCAL_PATH)/cv/include \
-LOCAL_CFLAGS := $(LOCAL_C_INCLUDES:%=-I%) -g -Wall
+        $(LOCAL_PATH)/cv/include
+LOCAL_CFLAGS := $(LOCAL_C_INCLUDES:%=-I%) -Wall -g
 LOCAL_LDLIBS += -L$(SYSROOT)/usr/lib -ldl -llog \
                 -L$(TARGET_OUT) -lcxcore -lcv
 

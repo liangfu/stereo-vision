@@ -21,7 +21,6 @@
 // #include "cv.hpp"
 #include "cxcore.h"
 #include "bmpfmt.h"
-#include "test.h"
 
 #define ANDROID_LOG_VERBOSE ANDROID_LOG_DEBUG
 #define LOG_TAG "TVReality"
@@ -59,7 +58,7 @@ extern "C" {
 // 	__END__;
 // }
 	
-JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env, jobject thiz, jint width, jint height, jbyteArray yuv, jintArray bgra) 
+JNIEXPORT void JNICALL Java_com_android_sv_OpenCVView_FindFeatures(JNIEnv* env, jobject thiz, jint width, jint height, jbyteArray yuv, jintArray bgra) 
 {
     jbyte* _yuv  = env->GetByteArrayElements(yuv, 0);
     jint*  _bgra = env->GetIntArrayElements(bgra, 0);
@@ -81,13 +80,13 @@ JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env,
     //Please make attention about BGRA byte order
     //ARGB stored in java as int array becomes BGRA at native level
     // cvtColor(myuv, mbgra, CV_YUV420sp2BGR, 4);
-	// cvIamArr(myuv);
-	IplImage * t1 = // loadPixels(myuv, width, height);
-		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
-	IplImage * t2 = // loadPixels(mbgra, width, height);
-		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 4);
-	t2 = cvCloneImage(t1);
-    cvCvtColor(t1, t2, CV_YCrCb2BGR);
+
+	// IplImage * t1 = // loadPixels(myuv, width, height);
+	// 	cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
+	// IplImage * t2 = // loadPixels(mbgra, width, height);
+	// 	cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 4);
+	// t2 = cvCloneImage(t1);
+    // cvCvtColor(t1, t2, CV_YCrCb2BGR);
 
     // vector<KeyPoint> v;
 
