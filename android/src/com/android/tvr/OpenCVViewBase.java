@@ -95,8 +95,19 @@ public abstract class OpenCVViewBase extends SurfaceView implements SurfaceHolde
         }
     }
 
+	/** 
+	 * abstract `processFrame` function to be defined
+	 * 
+	 * @param data : input image data captured by camera
+	 * 
+	 * @return 
+	 */
     protected abstract Bitmap processFrame(byte[] data);
 
+	/** 
+	 * thread entry for starting the processing stage
+	 * 
+	 */
     public void run() {
         mThreadRun = true;
         Log.i(TAG, "Starting processing thread");

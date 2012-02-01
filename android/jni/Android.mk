@@ -1,5 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
 
+
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := cxcore
@@ -41,7 +42,6 @@ LOCAL_SRC_FILES := \
         cxcore/src/cxutils.cpp
 
 include $(BUILD_STATIC_LIBRARY)
-# include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
@@ -118,9 +118,8 @@ LOCAL_SRC_FILES := \
         cv/src/cvundistort.cpp \
         cv/src/cvutils.cpp \
 
-LOCAL_STATIC_LIBRARIES := cxcore
-
 include $(BUILD_STATIC_LIBRARY)
+
 
 include $(CLEAR_VARS)
 
@@ -133,7 +132,6 @@ LOCAL_LDLIBS += -L$(SYSROOT)/usr/lib -ldl -llog \
                 -L$(TARGET_OUT) -lcxcore -lcv
 
 LOCAL_SRC_FILES := cvjni.cpp
-# LOCAL_SRC_FILES += cvjni.cpp
 
 LOCAL_STATIC_LIBRARIES := cxcore cv
 

@@ -21,6 +21,7 @@
 // #include "cv.hpp"
 #include "cxcore.h"
 #include "bmpfmt.h"
+#include "test.h"
 
 #define ANDROID_LOG_VERBOSE ANDROID_LOG_DEBUG
 #define LOG_TAG "TVReality"
@@ -34,10 +35,10 @@
 extern "C" {
 #endif
 
-IplImage* pImage = NULL;
-IplImage* loadPixels(int* pixels, int width, int height);
-IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
-		jint width, jint height);
+// IplImage* pImage = NULL;
+// IplImage* loadPixels(int* pixels, int width, int height);
+// IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
+// 		jint width, jint height);
 
 // extern "C" {
 // This is just an example of function
@@ -70,6 +71,8 @@ JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env,
 	CvMat myuv = cvMat(height + height/2, width, CV_8UC1, _yuv);
 	CvMat mbgra = cvMat(height, width, CV_8UC4, _bgra);
 	CvMat mgray = cvMat(height, width, CV_8UC1, _yuv);
+	// char s[1024]; sprintf(s, "%d", test2());
+	// LOGI(s);
 
     // CvMat myuv(int(height + height/2), int(width), CV_8UC1, (unsigned char *)_yuv);
     // CvMat mbgra(int(height), int(width), CV_8UC4, (unsigned char *)_bgra);
@@ -83,8 +86,8 @@ JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env,
 		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
 	IplImage * t2 = // loadPixels(mbgra, width, height);
 		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 4);
-	// t2 = cvCloneImage(t1);
-    // cvCvtColor(t1, t2, CV_YCrCb2BGR);
+	t2 = cvCloneImage(t1);
+    cvCvtColor(t1, t2, CV_YCrCb2BGR);
 
     // vector<KeyPoint> v;
 
@@ -186,41 +189,41 @@ JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env,
 // 	return bytes;
 // }
 
-IplImage* loadPixels(int* pixels, int width, int height) {
-	int x, y;
-	IplImage *img = cvCreateImage(cvSize(width, height),
-								  IPL_DEPTH_8U, 3);
-	unsigned char* base = (unsigned char*) (img->imageData);
-	unsigned char* ptr;
-	for (y = 0; y < height; y++) {
-		ptr = base + y * img->widthStep;
-		for (x = 0; x < width; x++) {
-			// blue
-			ptr[3 * x] = pixels[x + y * width] & 0xFF;
-			// green
-			ptr[3 * x + 1] = pixels[x + y * width] >> 8 & 0xFF;
-			// blue
-			ptr[3 * x + 2] = pixels[x + y * width] >> 16 & 0xFF;
-		}
-	}
-	return img;
-}
+// IplImage* loadPixels(int* pixels, int width, int height) {
+// 	int x, y;
+// 	IplImage *img = cvCreateImage(cvSize(width, height),
+// 								  IPL_DEPTH_8U, 3);
+// 	unsigned char* base = (unsigned char*) (img->imageData);
+// 	unsigned char* ptr;
+// 	for (y = 0; y < height; y++) {
+// 		ptr = base + y * img->widthStep;
+// 		for (x = 0; x < width; x++) {
+// 			// blue
+// 			ptr[3 * x] = pixels[x + y * width] & 0xFF;
+// 			// green
+// 			ptr[3 * x + 1] = pixels[x + y * width] >> 8 & 0xFF;
+// 			// blue
+// 			ptr[3 * x + 2] = pixels[x + y * width] >> 16 & 0xFF;
+// 		}
+// 	}
+// 	return img;
+// }
 
-IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
-								  jint width, jint height) {
-	int *pixels = env->GetIntArrayElements(array_data, 0);
-	if (pixels == 0) {
-		LOGE("Error getting int array of pixels.");
-		return 0;
-	}
-	IplImage *image = loadPixels(pixels, width, height);
-	env->ReleaseIntArrayElements(array_data, pixels, 0);
-	if (image == 0) {
-		LOGE("Error loading pixel array.");
-		return 0;
-	}
-	return image;
-}
+// IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
+// 								  jint width, jint height) {
+// 	int *pixels = env->GetIntArrayElements(array_data, 0);
+// 	if (pixels == 0) {
+// 		LOGE("Error getting int array of pixels.");
+// 		return 0;
+// 	}
+// 	IplImage *image = loadPixels(pixels, width, height);
+// 	env->ReleaseIntArrayElements(array_data, pixels, 0);
+// 	if (image == 0) {
+// 		LOGE("Error loading pixel array.");
+// 		return 0;
+// 	}
+// 	return image;
+// }
 
 #ifdef __cplusplus
 }
