@@ -83,6 +83,7 @@ JNIEXPORT void JNICALL Java_com_android_tvr_OpenCVView_FindFeatures(JNIEnv* env,
 		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
 	IplImage * t2 = // loadPixels(mbgra, width, height);
 		cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 4);
+	// t2 = cvCloneImage(t1);
     // cvCvtColor(t1, t2, CV_YCrCb2BGR);
 
     // vector<KeyPoint> v;
@@ -206,7 +207,7 @@ IplImage* loadPixels(int* pixels, int width, int height) {
 }
 
 IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
-		jint width, jint height) {
+								  jint width, jint height) {
 	int *pixels = env->GetIntArrayElements(array_data, 0);
 	if (pixels == 0) {
 		LOGE("Error getting int array of pixels.");
