@@ -4,34 +4,44 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-public class OpenCVView extends OpenCVViewBase {
+public class OpenCVView 
+	// extends OpenCVViewBase 
+{
     private static final String TAG = "Sample::View";
 
     public OpenCVView(Context context) {
-        super(context);
+        // super(context);
     }
 
-    @Override
-    protected Bitmap processFrame(byte[] data) {
-        int frameSize = getFrameWidth() * getFrameHeight();
-        int[] rgba = new int[frameSize];
+    public OpenCVView() {
+        // super(context);
+    }
+
+    // @Override
+	// protected Bitmap processFrame(byte[] data) {
+    //     int frameSize = getFrameWidth() * getFrameHeight();
+    //     int[] rgba = new int[frameSize];
 		
-		// for (int i = 0; i < frameSize; i++){
-		// 	rgba[i] = data[i];
-		// }
-        FindFeatures(getFrameWidth(), getFrameHeight(), data, rgba);
+	// 	// for (int i = 0; i < frameSize; i++){
+	// 	// 	rgba[i] = data[i];
+	// 	// }
+    //     FindFeatures(getFrameWidth(), getFrameHeight(), data, rgba);
 
-        Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), 
-										 Bitmap.Config.ARGB_8888);
-        bmp.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 
-					  0, 0, getFrameWidth(), getFrameHeight());
-        return bmp;
-    }
+    //     Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), 
+	// 									 Bitmap.Config.ARGB_8888);
+    //     bmp.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 
+	// 				  0, 0, getFrameWidth(), getFrameHeight());
+    //     return bmp;
+    // }
 
 	// public native boolean setSourceImage(int[] pixels, 
 	// 									 int width, int height);
 	// public native byte[] getSourceImage();
 	// public native void extractSURFFeature();
+	public boolean setSourceImage(int[] pixels, 
+								  int width, int height){return false;}
+	public byte[] getSourceImage(){return null;}
+	public void extractSURFFeature(){}
     public native void FindFeatures(int width, int height, 
 									byte yuv[], int[] rgba);
 
