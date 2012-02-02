@@ -1,4 +1,4 @@
-package com.android.tvr;
+package com.android.sv;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -39,8 +39,6 @@ public class OpenCVView extends OpenCVViewBase {
         Log.i(TAG, "loadLibrary - ready");
 		try{
 			System.loadLibrary("tvr_jni");
-			// System.loadLibrary("cv");
-		// 	System.loadLibrary("cxcore");
 		}catch(UnsatisfiedLinkError e){
 			System.err.println("Native code library failed to load.\n" + e);
 		}

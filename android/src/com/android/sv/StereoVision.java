@@ -1,9 +1,11 @@
-package com.android.tvr;
+package com.android.sv;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
 import android.app.Activity;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,13 +29,20 @@ public class StereoVision extends Activity {
 	// private static final String IMAGE_DIRECTORY = "/sdcard/DCIM/Camera";
 	// private static final int ACTIVITY_SELECT_CAMERA = 0;
 	// private static final int ACTIVITY_SELECT_IMAGE = 1;
-	private static final String TAG = "MAIN_ACTIVITY";
+	private static final String TAG = "StereoVision::Main";
 	// private static final int CAMERA_ID = Menu.FIRST;
 	// private static final int GALLERY_ID = Menu.FIRST + 1;
 	// private String mCurrentImagePath = null;
+
 	// private OpenCV opencv = new OpenCV();
 	// private ImageView mImageView;
-    // private static final String TAG = "Sample::Activity";
+    private Preview mPreview;
+    Camera mCamera;
+    int numberOfCameras;
+    int cameraCurrentlyLocked;
+	
+    // The first rear facing camera
+    int defaultCameraId;
 
     public StereoVision() {
         Log.i(TAG, "Instantiated new " + this.getClass());
@@ -46,9 +55,52 @@ public class StereoVision extends Activity {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// mImageView = new ImageView(this);
 		// setContentView(mImageView);
-		setContentView(new OpenCVView(this));
+
+        // // Hide the window title.
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		// setContentView(new OpenCVView(this));
+		mPreview = new Preview(this);
+		setContentView(mPreview);
+
+        // Find the total number of cameras available
+        numberOfCameras = Camera.getNumberOfCameras();
+
+        // Find the ID of the default camera
+        CameraInfo cameraInfo = new CameraInfo();
+		for (int i = 0; i < numberOfCameras; i++) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
+				defaultCameraId = i;
+			}
+		}
+
         Log.i(TAG, "onCreate - finish");
 	}
+
+    @Override
+		protected void onResume() {
+        super.onResume();
+
+        // Open the default i.e. the first rear facing camera.
+        mCamera = Camera.open();
+        cameraCurrentlyLocked = defaultCameraId;
+        mPreview.setCamera(mCamera);
+    }
+
+    @Override
+		protected void onPause() {
+        super.onPause();
+
+        // Because the Camera object is a shared resource, it's very
+        // important to release it when the activity is paused.
+        if (mCamera != null) {
+            mPreview.setCamera(null);
+            mCamera.release();
+            mCamera = null;
+        }
+    }
 
 	// @Override
 	// public boolean onCreateOptionsMenu(Menu menu) {

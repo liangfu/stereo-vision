@@ -1,4 +1,4 @@
-package com.android.tvr;
+package com.android.sv;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,11 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public abstract class OpenCVViewBase extends SurfaceView implements SurfaceHolder.Callback, Runnable {
+public abstract 
+class OpenCVViewBase 
+	extends SurfaceView 
+	implements SurfaceHolder.Callback, Runnable 
+{
     private static final String TAG = "Sample::SurfaceView";
 
     private Camera              mCamera;
@@ -86,12 +90,12 @@ public abstract class OpenCVViewBase extends SurfaceView implements SurfaceHolde
         Log.i(TAG, "surfaceDestroyed");
         mThreadRun = false;
         if (mCamera != null) {
-            synchronized (this) {
+            // synchronized (this) {
                 mCamera.stopPreview();
-                mCamera.setPreviewCallback(null);
-                mCamera.release();
-                mCamera = null;
-            }
+            //     mCamera.setPreviewCallback(null);
+            //     mCamera.release();
+            //     mCamera = null;
+            // }
         }
     }
 
@@ -114,14 +118,14 @@ public abstract class OpenCVViewBase extends SurfaceView implements SurfaceHolde
         while (mThreadRun) {
             Bitmap bmp = null;
 
-            synchronized (this) {
-                try {
-                    this.wait();
-                    bmp = processFrame(mFrame);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            // synchronized (this) {
+            //     try {
+            //         this.wait();
+            //         bmp = processFrame(mFrame);
+            //     } catch (InterruptedException e) {
+            //         e.printStackTrace();
+            //     }
+            // }
 
             if (bmp != null) {
                 Canvas canvas = mHolder.lockCanvas();
