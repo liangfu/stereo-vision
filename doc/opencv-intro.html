@@ -1,0 +1,1143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+  <title>Introduction to programming with OpenCV</title>
+  <meta name="description"
+ content="Introduction to programming with OpenCV">
+  <meta name="keywords" content="opencv-intro">
+  <meta name="resource-type" content="document">
+  <meta name="distribution" content="global">
+  <meta name="Generator" content="LaTeX2HTML v2002-2-1">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <link rel="STYLESHEET" href="opencv-intro.css">
+</head>
+<body>
+<!--Navigation Panel-->
+<img alt="next_inactive"
+ src="file:/usr/share/latex2html/icons/nx_grp_g.png" align="bottom"
+ border="0" height="24" width="81"> <img alt="up"
+ src="file:/usr/share/latex2html/icons/up_g.png" align="bottom"
+ border="0" height="24" width="26"> <img alt="previous"
+ src="file:/usr/share/latex2html/icons/prev_g.png" align="bottom"
+ border="0" height="24" width="63"> <br>
+<br>
+<br>
+<!--End of Navigation Panel-->
+<p></p>
+<p></p>
+<h1 align="center">Introduction to programming with OpenCV</h1>
+<div>
+<p align="center"><strong>Gady Agam</strong></p>
+<p align="center"><i> Department of Computer Science<br>
+</i> Illinois Institute of Technology<br>
+</p>
+<p align="center"><strong>January 27, 2006</strong></p>
+<p align="left"><small><br>
+</small></p>
+</div>
+<p>
+</p>
+<h3>Abstract:</h3>
+<div>
+The purpose of this document is to get you started quickly with OpenCV
+without having to go through lengthy reference manuals. Once you
+understand these basics you will be able to consult the OpenCV
+manuals on a need basis.
+<p></p>
+</div>
+<p>
+</p>
+<p></p>
+<p><br>
+</p>
+<h2><a name="SECTION00010000000000000000">Contents</a>
+</h2>
+<!--Table of Contents-->
+<ul>
+  <li><a name="tex2html29"
+ href="opencv-intro.html#SECTION00020000000000000000">Introduction</a>
+    <ul>
+      <li><a name="tex2html30"
+ href="opencv-intro.html#SECTION00021000000000000000">Description of
+OpenCV</a>
+      </li>
+      <li><a name="tex2html31"
+ href="opencv-intro.html#SECTION00022000000000000000">Resources</a>
+      </li>
+      <li><a name="tex2html32"
+ href="opencv-intro.html#SECTION00023000000000000000">OpenCV naming
+conventions</a>
+      </li>
+      <li><a name="tex2html33"
+ href="opencv-intro.html#SECTION00024000000000000000">Compilation
+instructions</a>
+      </li>
+      <li><a name="tex2html34"
+ href="opencv-intro.html#SECTION00025000000000000000">Example C Program</a>
+      </li>
+    </ul>
+    <br>
+  </li>
+  <li><a name="tex2html35"
+ href="opencv-intro.html#SECTION00030000000000000000">GUI commands</a>
+    <ul>
+      <li><a name="tex2html36"
+ href="opencv-intro.html#SECTION00031000000000000000">Window management</a>
+      </li>
+      <li><a name="tex2html37"
+ href="opencv-intro.html#SECTION00032000000000000000">Input handling</a>
+      </li>
+    </ul>
+    <br>
+  </li>
+  <li><a name="tex2html38"
+ href="opencv-intro.html#SECTION00040000000000000000">Basic OpenCV data
+structures</a>
+    <ul>
+      <li><a name="tex2html39"
+ href="opencv-intro.html#SECTION00041000000000000000">Image data
+structure</a>
+      </li>
+      <li><a name="tex2html40"
+ href="opencv-intro.html#SECTION00042000000000000000">Matrices and
+vectors</a>
+      </li>
+      <li><a name="tex2html41"
+ href="opencv-intro.html#SECTION00043000000000000000">Other data
+structures</a>
+      </li>
+    </ul>
+    <br>
+  </li>
+  <li><a name="tex2html42"
+ href="opencv-intro.html#SECTION00050000000000000000">Working with
+images</a>
+    <ul>
+      <li><a name="tex2html43"
+ href="opencv-intro.html#SECTION00051000000000000000">Allocating and
+releasing images</a>
+      </li>
+      <li><a name="tex2html44"
+ href="opencv-intro.html#SECTION00052000000000000000">Reading and
+writing images</a>
+      </li>
+      <li><a name="tex2html45"
+ href="opencv-intro.html#SECTION00053000000000000000">Accessing image
+elements</a>
+      </li>
+      <li><a name="tex2html46"
+ href="opencv-intro.html#SECTION00054000000000000000">Image conversion</a>
+      </li>
+      <li><a name="tex2html47"
+ href="opencv-intro.html#SECTION00055000000000000000">Drawing commands</a>
+      </li>
+    </ul>
+    <br>
+  </li>
+  <li><a name="tex2html48"
+ href="opencv-intro.html#SECTION00060000000000000000">Working with
+matrices</a>
+    <ul>
+      <li><a name="tex2html49"
+ href="opencv-intro.html#SECTION00061000000000000000">Allocating and
+releasing matrices</a>
+      </li>
+      <li><a name="tex2html50"
+ href="opencv-intro.html#SECTION00062000000000000000">Accessing matrix
+elements</a>
+      </li>
+      <li><a name="tex2html51"
+ href="opencv-intro.html#SECTION00063000000000000000">Matrix/vector
+operations</a>
+      </li>
+    </ul>
+    <br>
+  </li>
+  <li><a name="tex2html52"
+ href="opencv-intro.html#SECTION00070000000000000000">Working with
+video sequences</a>
+    <ul>
+      <li><a name="tex2html53"
+ href="opencv-intro.html#SECTION00071000000000000000">Capturing a frame
+from a video sequence</a>
+      </li>
+      <li><a name="tex2html54"
+ href="opencv-intro.html#SECTION00072000000000000000">Getting/setting
+frame information</a>
+      </li>
+      <li><a name="tex2html55"
+ href="opencv-intro.html#SECTION00073000000000000000">Saving a video
+file</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+<!--End of Table of Contents-->
+<p></p>
+<p></p>
+<p></p>
+<h1><a name="SECTION00020000000000000000">Introduction</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00021000000000000000">Description of OpenCV</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>General description
+    <ul>
+      <li>Open source computer vision library in C/C++.
+      </li>
+      <li>Optimized and intended for real-time applications.
+      </li>
+      <li>OS/hardware/window-manager independent. </li>
+      <li>Generic image/video loading, saving, and acquisition.
+      </li>
+      <li>Both low and high level API.
+      </li>
+      <li>Provides interface to Intel's Integrated Performance
+Primitives (IPP) with processor specific optimization (Intel
+processors). </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Features:
+    <ul>
+      <li>Image data manipulation (allocation, release, copying,
+setting, conversion).
+      </li>
+      <li>Image and video I/O (file and camera based input, image/video
+file output).
+      </li>
+      <li>Matrix and vector manipulation and linear algebra routines
+(products, solvers, eigenvalues, SVD).
+      </li>
+      <li>Various dynamic data structures (lists, queues, sets, trees,
+graphs).
+      </li>
+      <li>Basic image processing (filtering, edge detection, corner
+detection, sampling and interpolation, color conversion, morphological
+operations, histograms, image pyramids).
+      </li>
+      <li>Structural analysis (connected components, contour
+processing, distance transform, various moments, template matching,
+Hough transform, polygonal approximation, line fitting, ellipse
+fitting, Delaunay triangulation).
+      </li>
+      <li>Camera calibration (finding and tracking calibration
+patterns, calibration, fundamental matrix estimation, homography
+estimation, stereo correspondence).
+      </li>
+      <li>Motion analysis (optical flow, motion segmentation,
+tracking).
+      </li>
+      <li>Object recognition (eigen-methods, HMM).
+      </li>
+      <li>Basic GUI (display image/video, keyboard and mouse handling,
+scroll-bars).
+      </li>
+      <li>Image labeling (line, conic, polygon, text drawing) </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>OpenCV modules:
+    <ul>
+      <li><em>cv</em> - Main OpenCV functions.
+      </li>
+      <li><em>cvaux</em> - Auxiliary (experimental) OpenCV functions.
+      </li>
+      <li><em>cxcore</em> - Data structures and linear algebra support.
+      </li>
+      <li><em>highgui</em> - GUI functions.
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00022000000000000000">Resources</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Reference manuals:
+    <ul>
+      <li><tt>&lt;opencv-root&gt;/docs/index.htm</tt>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Web resources:
+    <ul>
+      <li>Official webpage: <tt>http://www.intel.com/technology/computing/opencv/</tt>
+        <p></p>
+      </li>
+      <li>Software download: <tt>http://sourceforge.net/projects/opencvlibrary/</tt>
+        <p></p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Books:
+    <ul>
+      <li>Open Source Computer Vision Library by Gary R. Bradski, Vadim
+Pisarevsky, and Jean-Yves Bouguet, Springer, 1st ed. (June, 2006).
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Sample programs for video processing (in <tt>&lt;opencv-root&gt;/samples/c/</tt>):
+    <ul>
+      <li>color tracking: <tt>camshiftdemo</tt>
+      </li>
+      <li>point tracking: <tt>lkdemo</tt>
+      </li>
+      <li>motion segmentation: <tt>motempl</tt>
+      </li>
+      <li>edge detection: <tt>laplace</tt> </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Sample programs for image processing (in <tt>&lt;opencv-root&gt;/samples/c/</tt>):
+    <ul>
+      <li>edge detection: <tt>edge</tt>
+      </li>
+      <li>segmentation: <tt>pyramid_segmentation</tt>
+      </li>
+      <li>morphology: <tt>morphology</tt>
+      </li>
+      <li>histogram: <tt>demhist</tt>
+      </li>
+      <li>distance transform: <tt>distrans</tt>
+      </li>
+      <li>ellipse fitting: <tt>fitellipse</tt> </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h2><a name="SECTION00023000000000000000">OpenCV naming conventions</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Function naming conventions:
+    <pre>    cvActionTargetMod(...)<br><br>    Action = the core functionality (e.g. set, create)<br>    Target = the target image area (e.g. contour, polygon)<br>    Mod    = optional modifiers (e.g. argument type)<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Matrix data types:
+    <pre>    CV_&lt;bit_depth&gt;(S|U|F)C&lt;number_of_channels&gt;<br><br>    S = Signed integer<br>    U = Unsigned integer<br>    F = Float <br><br>    E.g.: CV_8UC1 means an 8-bit unsigned single-channel matrix, <br>          CV_32FC2 means a 32-bit float matrix with two channels.<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Image data types:
+    <pre>    IPL_DEPTH_&lt;bit_depth&gt;(S|U|F)<br><br>    E.g.: IPL_DEPTH_8U means an  8-bit unsigned image.<br>          IPL_DEPTH_32F means a 32-bit float image.<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Header files:
+    <pre>    #include &lt;cv.h&gt;<br>    #include &lt;cvaux.h&gt;<br>    #include &lt;highgui.h&gt;  <br>    #include &lt;cxcore.h&gt;   // unnecessary - included in cv.h<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00024000000000000000">Compilation instructions</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Linux:
+    <pre>g++ hello-world.cpp -o hello-world \<br>    -I /usr/local/include/opencv -L /usr/local/lib  \<br>    -lm -lcv -lhighgui -lcvaux<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Windows:
+    <pre>In the project preferences set the path to the OpenCV header files and<br>the path to the OpenCV library files.<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h2><a name="SECTION00025000000000000000">Example C Program</a>
+</h2>
+<p>
+<font size="-1"></font></p>
+<p><font size="-1"></font></p>
+<pre>////////////////////////////////////////////////////////////////////////<br>//<br>// hello-world.cpp<br>//<br>// This is a simple, introductory OpenCV program. The program reads an<br>// image from a file, inverts it, and displays the result. <br>//<br>////////////////////////////////////////////////////////////////////////<br>#include &lt;stdlib.h&gt;<br>#include &lt;stdio.h&gt;<br>#include &lt;math.h&gt;<br>#include &lt;cv.h&gt;<br>#include &lt;highgui.h&gt;<br><br><br>int main(int argc, char *argv[])<br>{<br>  IplImage* img = 0; <br>  int height,width,step,channels;<br>  uchar *data;<br>  int i,j,k;<br><br>  if(argc&lt;2){<br>    printf("Usage: main &lt;image-file-name&gt;\n\7");<br>    exit(0);<br>  }<br><br>  // load an image  <br>  img=cvLoadImage(argv[1]);<br>  if(!img){<br>    printf("Could not load image file: %s\n",argv[1]);<br>    exit(0);<br>  }<br><br>  // get the image data<br>  height    = img-&gt;height;<br>  width     = img-&gt;width;<br>  step      = img-&gt;widthStep;<br>  channels  = img-&gt;nChannels;<br>  data      = (uchar *)img-&gt;imageData;<br>  printf("Processing a %dx%d image with %d channels\n",height,width,channels); <br><br>  // create a window<br>  cvNamedWindow("mainWin", CV_WINDOW_AUTOSIZE); <br>  cvMoveWindow("mainWin", 100, 100);<br><br>  // invert the image<br>  for(i=0;i&lt;height;i++) for(j=0;j&lt;width;j++) for(k=0;k&lt;channels;k++)<br>    data[i*step+j*channels+k]=255-data[i*step+j*channels+k];<br><br>  // show the image<br>  cvShowImage("mainWin", img );<br><br>  // wait for a key<br>  cvWaitKey(0);<br><br>  // release the image<br>  cvReleaseImage(&amp;img );<br>  return 0;<br>}<br></pre>
+<font size="-1"></font>
+<p><font size="-1"> </font>
+</p>
+<p></p>
+<p></p>
+<h1><a name="SECTION00030000000000000000">GUI commands</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00031000000000000000">Window management</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Create and position a window:
+    <pre>  cvNamedWindow("win1", CV_WINDOW_AUTOSIZE); <br>  cvMoveWindow("win1", 100, 100); // offset from the UL corner of the screen<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Load an image:
+    <pre>  IplImage* img=0; <br>  img=cvLoadImage(fileName);<br>  if(!img) printf("Could not load image file: %s\n",fileName);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Display an image:
+    <pre>  cvShowImage("win1",img);<br></pre>
+    <p>
+Can display a color or grayscale byte/float-image. A byte image is
+assumed to have values in the range <img src="img1.png"
+ alt="$[0..255]$" align="middle" border="0" height="36" width="59">. A
+float image is assumed
+to have values in the range <img src="img2.png" alt="$[0..1]$"
+ align="middle" border="0" height="36" width="41">. A color image is
+assumed to have
+data in BGR order.
+    </p>
+    <p></p>
+  </li>
+  <li>Close a window:
+    <pre>  cvDestroyWindow("win1");<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Resize a window:
+    <pre>  cvResizeWindow("win1",100,100); // new width/heigh in pixels<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h2><a name="SECTION00032000000000000000">Input handling</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Handle mouse events:
+    <ul>
+      <li>Define a mouse handler:
+        <pre>  void mouseHandler(int event, int x, int y, int flags, void* param)<br>  {<br>    switch(event){<br>      case CV_EVENT_LBUTTONDOWN:<br>        if(flags &amp; CV_EVENT_FLAG_CTRLKEY) <br>          printf("Left button down with CTRL pressed\n");<br>        break;<br><br>      case CV_EVENT_LBUTTONUP:<br>        printf("Left button up\n");<br>        break;<br>    }<br>  }<br><br>  x,y:   pixel coordinates with respect to the UL corner<br><br>  event: CV_EVENT_LBUTTONDOWN,   CV_EVENT_RBUTTONDOWN,   CV_EVENT_MBUTTONDOWN,<br>         CV_EVENT_LBUTTONUP,     CV_EVENT_RBUTTONUP,     CV_EVENT_MBUTTONUP,<br>         CV_EVENT_LBUTTONDBLCLK, CV_EVENT_RBUTTONDBLCLK, CV_EVENT_MBUTTONDBLCLK,<br>         CV_EVENT_MOUSEMOVE:<br><br>  flags: CV_EVENT_FLAG_CTRLKEY, CV_EVENT_FLAG_SHIFTKEY, CV_EVENT_FLAG_ALTKEY,<br>         CV_EVENT_FLAG_LBUTTON, CV_EVENT_FLAG_RBUTTON,  CV_EVENT_FLAG_MBUTTON<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>Register the handler:
+        <pre>  mouseParam=5;<br>  cvSetMouseCallback("win1",mouseHandler,&amp;mouseParam);<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+    <p></p>
+  </li>
+  <li>Handle keyboard events:
+    <ul>
+      <li>The keyboard does not have an event handler.
+        <p></p>
+      </li>
+      <li>Get keyboard input without blocking:
+        <pre>  int key;<br>  key=cvWaitKey(10); // wait 10ms for input<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>Get keyboard input with blocking:
+        <pre>  int key;<br>  key=cvWaitKey(0); // wait indefinitely for input<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>The main keyboard event loop:
+        <pre>  while(1){<br>    key=cvWaitKey(10);<br>    if(key==27) break;<br><br>    switch(key){<br>      case 'h':<br>        ...<br>        break;<br>      case 'i':<br>        ...<br>        break;<br>    }<br>  }<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Handle trackbar events:
+    <ul>
+      <li>Define a trackbar handler:
+        <pre>  void trackbarHandler(int pos)<br>  {<br>    printf("Trackbar position: %d\n",pos);<br>  }<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>Register the handler:
+        <pre>  int trackbarVal=25;<br>  int maxVal=100;<br>  cvCreateTrackbar("bar1", "win1", &amp;trackbarVal ,maxVal , trackbarHandler);<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>Get the current trackbar position:
+        <pre>  int pos = cvGetTrackbarPos("bar1","win1");<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>Set the trackbar position:
+        <pre>  cvSetTrackbarPos("bar1", "win1", 25);<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h1><a name="SECTION00040000000000000000">Basic OpenCV data structures</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00041000000000000000">Image data structure</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>IPL image:
+    <pre>IplImage<br>  |-- int  nChannels;     // Number of color channels (1,2,3,4)<br>  |-- int  depth;         // Pixel depth in bits: <br>  |                       //   IPL_DEPTH_8U, IPL_DEPTH_8S, <br>  |                       //   IPL_DEPTH_16U,IPL_DEPTH_16S, <br>  |                       //   IPL_DEPTH_32S,IPL_DEPTH_32F, <br>  |                       //   IPL_DEPTH_64F<br>  |-- int  width;         // image width in pixels<br>  |-- int  height;        // image height in pixels<br>  |-- char* imageData;    // pointer to aligned image data<br>  |                       // Note that color images are stored in BGR order<br>  |-- int  dataOrder;     // 0 - interleaved color channels, <br>  |                       // 1 - separate color channels<br>  |                       // cvCreateImage can only create interleaved images<br>  |-- int  origin;        // 0 - top-left origin,<br>  |                       // 1 - bottom-left origin (Windows bitmaps style)<br>  |-- int  widthStep;     // size of aligned image row in bytes<br>  |-- int  imageSize;     // image data size in bytes = height*widthStep<br>  |-- struct _IplROI *roi;// image ROI. when not NULL specifies image<br>  |                       // region  to be processed.<br>  |-- char *imageDataOrigin; // pointer to the unaligned origin of image data<br>  |                          // (needed for correct image deallocation)<br>  |<br>  |-- int  align;         // Alignment of image rows: 4 or 8 byte alignment<br>  |                       // OpenCV ignores this and uses widthStep instead<br>  |-- char colorModel[4]; // Color model - ignored by OpenCV<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h2><a name="SECTION00042000000000000000">Matrices and vectors</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Matrices:
+    <pre>CvMat                      // 2D array<br>  |-- int   type;          // elements type (uchar,short,int,float,double) and flags<br>  |-- int   step;          // full row length in bytes<br>  |-- int   rows, cols;    // dimensions<br>  |-- int   height, width; // alternative dimensions reference<br>  |-- union data;<br>      |-- uchar*  ptr;     // data pointer for an unsigned char matrix<br>      |-- short*  s;       // data pointer for a short matrix<br>      |-- int*    i;       // data pointer for an integer matrix<br>      |-- float*  fl;      // data pointer for a float matrix<br>      |-- double* db;      // data pointer for a double matrix<br><br><br>CvMatND                    // N-dimensional array<br>  |-- int   type;          // elements type (uchar,short,int,float,double) and flags<br>  |-- int   dims;          // number of array dimensions<br>  |-- union data;<br>  |   |-- uchar*  ptr;     // data pointer for an unsigned char matrix<br>  |   |-- short*  s;       // data pointer for a short matrix<br>  |   |-- int*    i;       // data pointer for an integer matrix<br>  |   |-- float*  fl;      // data pointer for a float matrix<br>  |   |-- double* db;      // data pointer for a double matrix<br>  |<br>  |-- struct dim[];        // information for each dimension<br>      |-- size;            // number of elements in a given dimension<br>      |-- step;            // distance between elements in a given dimension<br><br><br>CvSparseMat // SPARSE N-dimensional array<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Generic arrays:
+    <pre>CvArr*     // Used only as a function parameter to specify that the<br>           // function accepts arrays of more than a single type, such<br>           // as: IplImage*, CvMat* or even CvSeq*. The particular array <br>           // type is determined at runtime by analyzing the first 4<br>           // bytes of the header of the actual array.<br></pre>
+    <p>
+    </p>
+    <p></p>
+  </li>
+  <li>Scalars:
+    <pre>CvScalar<br>  |-- double val[4]; //4D vector<br></pre>
+    <p>
+Initializer function:
+    </p>
+    <pre>CvScalar s = cvScalar(double val0, double val1=0, double val2=0, double val3=0);<br></pre>
+    <p>
+Example:
+    </p>
+    <pre>CvScalar s = cvScalar(20.0);<br>s.val[0]=10.0;<br></pre>
+    <p>
+Note that the initializer function has the same name as the data
+structure only starting with a lower case character. It is not a C++
+constructor.
+    </p>
+    <p></p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00043000000000000000">Other data structures</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Points:
+    <pre>CvPoint      p = cvPoint(int x, int y);<br>CvPoint2D32f p = cvPoint2D32f(float x, float y);<br>CvPoint3D32f p = cvPoint3D32f(float x, float y, float z);<br><br>E.g.:<br>p.x=5.0;<br>p.y=5.0;<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Rectangular dimensions:
+    <pre>CvSize       r = cvSize(int width, int height);<br>CvSize2D32f  r = cvSize2D32f(float width, float height);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Rectangular dimensions with offset:
+    <pre>CvRect       r = cvRect(int x, int y, int width, int height);<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h1><a name="SECTION00050000000000000000">Working with images</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00051000000000000000">Allocating and releasing
+images</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Allocate an image:
+    <pre>IplImage* cvCreateImage(CvSize size, int depth, int channels);<br><br>  size:  cvSize(width,height);<br><br>  depth: pixel depth in bits: IPL_DEPTH_8U, IPL_DEPTH_8S, IPL_DEPTH_16U,<br>    IPL_DEPTH_16S, IPL_DEPTH_32S, IPL_DEPTH_32F, IPL_DEPTH_64F<br><br>  channels: Number of channels per pixel. Can be 1, 2, 3 or 4. The channels <br>    are interleaved. The usual data layout of a color image is<br>    b0 g0 r0 b1 g1 r1 ...<br></pre>
+    <p>
+Examples:
+    </p>
+    <pre>// Allocate a 1-channel byte image<br>IplImage* img1=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1); <br><br>// Allocate a 3-channel float image<br>IplImage* img2=cvCreateImage(cvSize(640,480),IPL_DEPTH_32F,3);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Release an image:
+    <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1); <br>cvReleaseImage(&amp;img);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Clone an image:
+    <pre>IplImage* img1=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1); <br>IplImage* img2;<br>img2=cvCloneImage(img1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Set/get the region of interest:
+    <pre>void  cvSetImageROI(IplImage* image, CvRect rect);<br>void  cvResetImageROI(IplImage* image);<br>vRect cvGetImageROI(const IplImage* image);<br><br>The majority of OpenCV functions support ROI.<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Set/get the channel of interest:
+    <pre>void cvSetImageCOI(IplImage* image, int coi); // 0=all<br>int cvGetImageCOI(const IplImage* image);<br><br>The majority of OpenCV functions do NOT support COI.<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00052000000000000000">Reading and writing images</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Reading an image from a file:
+    <pre>  IplImage* img=0; <br>  img=cvLoadImage(fileName);<br>  if(!img) printf("Could not load image file: %s\n",fileName);<br><br>  Supported image formats: BMP, DIB, JPEG, JPG, JPE, PNG, PBM, PGM, PPM,<br>                           SR, RAS, TIFF, TIF<br></pre>
+    <p>
+By default, the loaded image is forced to be a 3-channel color
+image. This default can be modified by using:
+    </p>
+    <pre>  img=cvLoadImage(fileName,flag);<br><br>  flag: &gt;0 the loaded image is forced to be a 3-channel color image<br>        =0 the loaded image is forced to be a 1 channel grayscale image<br>        &lt;0 the loaded image is loaded as is (with number of channels in the file).<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Writing an image to a file:
+    <pre>  if(!cvSaveImage(outFileName,img)) printf("Could not save: %s\n",outFileName);<br></pre>
+    <p>
+The output file format is determined based on the file name extension. </p>
+    <p></p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00053000000000000000">Accessing image elements</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Assume that you need to access the <img src="img3.png" alt="$k$"
+ align="bottom" border="0" height="15" width="14">-th channel of the
+pixel at
+the <img src="img4.png" alt="$i$" align="bottom" border="0" height="18"
+ width="10">-row and <img src="img5.png" alt="$j$" align="middle"
+ border="0" height="33" width="13">-th column. The row index <img
+ src="img4.png" alt="$i$" align="bottom" border="0" height="18"
+ width="10"> is in the range
+<!-- MATH
+ $[0,\mbox{height}-1]$
+ --><img src="img6.png"
+ alt="$[0,\mbox{height}-1]$" align="middle" border="0" height="36"
+ width="108">. The column index <img src="img5.png" alt="$j$"
+ align="middle" border="0" height="33" width="13"> is in the range
+<!-- MATH
+ $[0,\mbox{width}-1]$
+ --><img src="img7.png"
+ alt="$[0,\mbox{width}-1]$" align="middle" border="0" height="36"
+ width="104">. The channel index <img src="img3.png" alt="$k$"
+ align="bottom" border="0" height="15" width="14"> is in the range
+<!-- MATH
+ $[0,\mbox{nchannels}-1]$
+ --><img src="img8.png"
+ alt="$[0,\mbox{nchannels}-1]$" align="middle" border="0" height="36"
+ width="135">.
+    <p></p>
+  </li>
+  <li><em>Indirect access:</em> (General, but inefficient, access to
+any type image)
+    <p></p>
+    <ul>
+      <li>For a single-channel byte image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1);<br>CvScalar s;<br>s=cvGet2D(img,i,j); // get the (i,j) pixel value<br>printf("intensity=%f\n",s.val[0]);<br>s.val[0]=111;<br>cvSet2D(img,i,j,s); // set the (i,j) pixel value<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel float (or byte) image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_32F,3);<br>CvScalar s;<br>s=cvGet2D(img,i,j); // get the (i,j) pixel value<br>printf("B=%f, G=%f, R=%f\n",s.val[0],s.val[1],s.val[2]);<br>s.val[0]=111;<br>s.val[1]=111;<br>s.val[2]=111;<br>cvSet2D(img,i,j,s); // set the (i,j) pixel value<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li><em>Direct access:</em>
+(Efficient access, but error prone)
+    <p></p>
+    <ul>
+      <li>For a single-channel byte image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1);<br>((uchar *)(img-&gt;imageData + i*img-&gt;widthStep))[j]=111;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel byte image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,3);<br>((uchar *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 0]=111; // B<br>((uchar *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 1]=112; // G<br>((uchar *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 2]=113; // R<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel float image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_32F,3);<br>((float *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 0]=111; // B<br>((float *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 1]=112; // G<br>((float *)(img-&gt;imageData + i*img-&gt;widthStep))[j*img-&gt;nChannels + 2]=113; // R<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li><em>Direct access using a pointer:</em>
+(Simplified and efficient access under limiting assumptions)
+    <p></p>
+    <ul>
+      <li>For a single-channel byte image:
+        <pre>IplImage* img  = cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1);<br>int height     = img-&gt;height;<br>int width      = img-&gt;width;<br>int step       = img-&gt;widthStep/sizeof(uchar);<br>uchar* data    = (uchar *)img-&gt;imageData;<br>data[i*step+j] = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel byte image:
+        <pre>IplImage* img  = cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,3);<br>int height     = img-&gt;height;<br>int width      = img-&gt;width;<br>int step       = img-&gt;widthStep/sizeof(uchar);<br>int channels   = img-&gt;nChannels;<br>uchar* data    = (uchar *)img-&gt;imageData;<br>data[i*step+j*channels+k] = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel float image (assuming a 4-byte
+alignment):
+        <pre>IplImage* img  = cvCreateImage(cvSize(640,480),IPL_DEPTH_32F,3);<br>int height     = img-&gt;height;<br>int width      = img-&gt;width;<br>int step       = img-&gt;widthStep/sizeof(float);<br>int channels   = img-&gt;nChannels;<br>float * data    = (float *)img-&gt;imageData;<br>data[i*step+j*channels+k] = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+    <p></p>
+  </li>
+  <li><em>Direct access using a c++ wrapper:</em>
+(Simple and efficient access)
+    <p></p>
+    <ul>
+      <li>Define a c++ wrapper for single-channel byte images,
+multi-channel
+byte images, and multi-channel float images:
+        <pre>template&lt;class T&gt; class Image<br>{<br>  private:<br>  IplImage* imgp;<br>  public:<br>  Image(IplImage* img=0) {imgp=img;}<br>  ~Image(){imgp=0;}<br>  void operator=(IplImage* img) {imgp=img;}<br>  inline T* operator[](const int rowIndx) {<br>    return ((T *)(imgp-&gt;imageData + rowIndx*imgp-&gt;widthStep));}<br>};<br><br>typedef struct{<br>  unsigned char b,g,r;<br>} RgbPixel;<br><br>typedef struct{<br>  float b,g,r;<br>} RgbPixelFloat;<br><br>typedef Image&lt;RgbPixel&gt;       RgbImage;<br>typedef Image&lt;RgbPixelFloat&gt;  RgbImageFloat;<br>typedef Image&lt;unsigned char&gt;  BwImage;<br>typedef Image&lt;float&gt;          BwImageFloat;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a single-channel byte image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,1);<br>BwImage imgA(img);<br>imgA[i][j] = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel byte image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,3);<br>RgbImage  imgA(img);<br>imgA[i][j].b = 111;<br>imgA[i][j].g = 111;<br>imgA[i][j].r = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+      <li>For a multi-channel float image:
+        <pre>IplImage* img=cvCreateImage(cvSize(640,480),IPL_DEPTH_32F,3);<br>RgbImageFloat imgA(img);<br>imgA[i][j].b = 111;<br>imgA[i][j].g = 111;<br>imgA[i][j].r = 111;<br></pre>
+        <p>
+        </p>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00054000000000000000">Image conversion</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Convert to a grayscale or color byte-image:
+    <pre>cvConvertImage(src, dst, flags=0);<br><br>  src = float/byte grayscale/color image<br>  dst = byte grayscale/color image<br>  flags = CV_CVTIMG_FLIP     (flip vertically)<br>          CV_CVTIMG_SWAP_RB  (swap the R and B channels)<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Convert a color image to grayscale:
+    <p></p>
+    <p><br>
+Using the OpenCV conversion:
+    </p>
+    <pre>cvCvtColor(cimg,gimg,CV_BGR2GRAY); // cimg -&gt; gimg<br></pre>
+    <p>
+    </p>
+    <p><br>
+Using a direct conversion:
+    </p>
+    <pre>for(i=0;i&lt;cimg-&gt;height;i++) for(j=0;j&lt;cimg-&gt;width;j++) <br>  gimgA[i][j]= (uchar)(cimgA[i][j].b*0.114 + <br>                       cimgA[i][j].g*0.587 + <br>                       cimgA[i][j].r*0.299);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Convert between color spaces:
+    <p></p>
+    <pre>cvCvtColor(src,dst,code); // src -&gt; dst<br><br>  code    = CV_&lt;X&gt;2&lt;Y&gt;<br>  &lt;X&gt;/&lt;Y&gt; = RGB, BGR, GRAY, HSV, YCrCb, XYZ, Lab, Luv, HLS<br><br>e.g.: CV_BGR2GRAY, CV_BGR2HSV, CV_BGR2Lab<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00055000000000000000">Drawing commands</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Draw a box:
+    <pre>// draw a box with red lines of width 1 between (100,100) and (200,200)<br>cvRectangle(img, cvPoint(100,100), cvPoint(200,200), cvScalar(255,0,0), 1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Draw a circle:
+    <pre>// draw a circle at (100,100) with a radius of 20. Use green lines of width 1<br>cvCircle(img, cvPoint(100,100), 20, cvScalar(0,255,0), 1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Draw a line segment:
+    <pre>// draw a green line of width 1 between (100,100) and (200,200)<br>cvLine(img, cvPoint(100,100), cvPoint(200,200), cvScalar(0,255,0), 1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Draw a set of polylines:
+    <pre>CvPoint  curve1[]={10,10,  10,100,  100,100,  100,10};<br>CvPoint  curve2[]={30,30,  30,130,  130,130,  130,30,  150,10};<br>CvPoint* curveArr[2]={curve1, curve2};<br>int      nCurvePts[2]={4,5};<br>int      nCurves=2;<br>int      isCurveClosed=1;<br>int      lineWidth=1;<br><br>cvPolyLine(img,curveArr,nCurvePts,nCurves,isCurveClosed,cvScalar(0,255,255),lineWidth);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Draw a set of filled polygons:
+    <pre>cvFillPoly(img,curveArr,nCurvePts,nCurves,cvScalar(0,255,255));<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Add text:
+    <pre>CvFont font;<br>double hScale=1.0;<br>double vScale=1.0;<br>int    lineWidth=1;<br>cvInitFont(&amp;font,CV_FONT_HERSHEY_SIMPLEX|CV_FONT_ITALIC, hScale,vScale,0,lineWidth);<br><br>cvPutText (img,"My comment",cvPoint(200,400), &amp;font, cvScalar(255,255,0));<br></pre>
+    <p>
+Other possible fonts:
+    </p>
+    <pre>CV_FONT_HERSHEY_SIMPLEX, CV_FONT_HERSHEY_PLAIN,<br>CV_FONT_HERSHEY_DUPLEX, CV_FONT_HERSHEY_COMPLEX,<br>CV_FONT_HERSHEY_TRIPLEX, CV_FONT_HERSHEY_COMPLEX_SMALL,<br>CV_FONT_HERSHEY_SCRIPT_SIMPLEX, CV_FONT_HERSHEY_SCRIPT_COMPLEX,<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<p></p>
+<h1><a name="SECTION00060000000000000000">Working with matrices</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00061000000000000000">Allocating and releasing
+matrices</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>General:
+    <ul>
+      <li>OpenCV has a C interface to matrix operations. There are many
+alternatives that have a C++ interface (which is more convenient) and
+are as efficient as OpenCV.
+      </li>
+      <li>Vectors are obtained in OpenCV as matrices having one of
+their dimensions as 1. </li>
+      <li>Matrices are stored row by row where each row has a 4 byte
+alignment.
+      </li>
+    </ul>
+    <p>
+    </p>
+  </li>
+  <li>Allocate a matrix:
+    <pre>CvMat* cvCreateMat(int rows, int cols, int type);<br><br>  type: Type of the matrix elements. Specified in form<br>  CV_&lt;bit_depth&gt;(S|U|F)C&lt;number_of_channels&gt;.  E.g.: CV_8UC1 means an<br>  8-bit unsigned single-channel matrix, CV_32SC2 means a 32-bit signed<br>  matrix with two channels.<br><br>  Example:<br>  CvMat* M = cvCreateMat(4,4,CV_32FC1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Release a matrix:
+    <pre>CvMat* M = cvCreateMat(4,4,CV_32FC1);<br>cvReleaseMat(&amp;M);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Clone a matrix:
+    <pre>CvMat* M1 = cvCreateMat(4,4,CV_32FC1);<br>CvMat* M2;<br>M2=cvCloneMat(M1);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Initialize a matrix:
+    <pre>double a[] = { 1,  2,  3,  4,<br>               5,  6,  7,  8,<br>               9, 10, 11, 12 };<br><br>CvMat Ma=cvMat(3, 4, CV_64FC1, a);<br></pre>
+    <p>Alternatively:
+    </p>
+    <pre>CvMat Ma;<br>cvInitMatHeader(&amp;Ma, 3, 4, CV_64FC1, a);<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Initialize a matrix to identity:
+    <pre>CvMat* M = cvCreateMat(4,4,CV_32FC1);<br>cvSetIdentity(M); // does not seem to be working properly<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00062000000000000000">Accessing matrix elements</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Assume that you need to access the <img src="img9.png"
+ alt="$(i,j)$" align="middle" border="0" height="36" width="40"> cell
+of a 2D float
+matrix.
+    <p></p>
+  </li>
+  <li>Indirect matrix element access:
+    <pre>cvmSet(M,i,j,2.0); // Set M(i,j)<br>t = cvmGet(M,i,j); // Get M(i,j)<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Direct matrix element access assuming a 4-byte alignment:
+    <pre>CvMat* M    = cvCreateMat(4,4,CV_32FC1);<br>int n       = M-&gt;cols;<br>float *data = M-&gt;data.fl;<br><br>data[i*n+j] = 3.0;<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Direct matrix element access assuming possible alignment gaps:
+    <pre>CvMat* M    = cvCreateMat(4,4,CV_32FC1);<br>int   step  = M-&gt;step/sizeof(float);<br>float *data = M-&gt;data.fl;<br><br>(data+i*step)[j] = 3.0;<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Direct matrix element access of an initialized matrix:
+    <pre>double a[16];<br>CvMat Ma = cvMat(3, 4, CV_64FC1, a);<br>a[i*4+j] = 2.0; // Ma(i,j)=2.0;<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00063000000000000000">Matrix/vector operations</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Matrix-matrix operations:
+    <pre>CvMat *Ma, *Mb, *Mc;<br>cvAdd(Ma, Mb, Mc);      // Ma+Mb   -&gt; Mc<br>cvSub(Ma, Mb, Mc);      // Ma-Mb   -&gt; Mc<br>cvMatMul(Ma, Mb, Mc);   // Ma*Mb   -&gt; Mc<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Elementwise matrix operations:
+    <pre>CvMat *Ma, *Mb, *Mc;<br>cvMul(Ma, Mb, Mc);      // Ma.*Mb  -&gt; Mc<br>cvDiv(Ma, Mb, Mc);      // Ma./Mb  -&gt; Mc<br>cvAddS(Ma, cvScalar(-10.0), Mc); // Ma.-10 -&gt; Mc<br></pre>
+    <p>
+    </p>
+    <p></p>
+  </li>
+  <li>Vector products:
+    <pre>double va[] = {1, 2, 3};<br>double vb[] = {0, 0, 1};<br>double vc[3];<br><br>CvMat Va=cvMat(3, 1, CV_64FC1, va);<br>CvMat Vb=cvMat(3, 1, CV_64FC1, vb);<br>CvMat Vc=cvMat(3, 1, CV_64FC1, vc);<br><br>double res=cvDotProduct(&amp;Va,&amp;Vb); // dot product:   Va . Vb -&gt; res<br>cvCrossProduct(&amp;Va, &amp;Vb, &amp;Vc);    // cross product: Va x Vb -&gt; Vc<br>end{verbatim}<br></pre>
+    <p>
+Note that Va, Vb, Vc, must be 3 element vectors in a cross product.
+    </p>
+    <p><br>
+    </p>
+    <p></p>
+  </li>
+  <li>Single matrix operations:
+    <pre>CvMat *Ma, *Mb;<br>cvTranspose(Ma, Mb);      // transpose(Ma) -&gt; Mb (cannot transpose onto self)<br>CvScalar t = cvTrace(Ma); // trace(Ma) -&gt; t.val[0] <br>double d = cvDet(Ma);     // det(Ma) -&gt; d<br>cvInvert(Ma, Mb);         // inv(Ma) -&gt; Mb<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Inhomogeneous linear system solver:
+    <pre>CvMat* A  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* x  = cvCreateMat(3,1,CV_32FC1);<br>CvMat* b  = cvCreateMat(3,1,CV_32FC1);<br>cvSolve(&amp;A, &amp;b, &amp;x);    // solve (Ax=b) for x<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Eigen analysis (of a symmetric matrix):
+    <pre>CvMat* A  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* E  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* l  = cvCreateMat(3,1,CV_32FC1);<br>cvEigenVV(&amp;A, &amp;E, &amp;l);  // l = eigenvalues of A (descending order)<br>                        // E = corresponding eigenvectors (rows)<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Singular value decomposition:
+    <pre>CvMat* A  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* U  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* D  = cvCreateMat(3,3,CV_32FC1);<br>CvMat* V  = cvCreateMat(3,3,CV_32FC1);<br>cvSVD(A, D, U, V, CV_SVD_U_T|CV_SVD_V_T); // A = U D V^T<br></pre>
+    <p>
+The flags cause U and V to be returned transposed (does not work well
+without the transpose flags). </p>
+    <p></p>
+  </li>
+</ul>
+<p>
+</p>
+<h1><a name="SECTION00070000000000000000">Working with video sequences</a>
+</h1>
+<p>
+</p>
+<h2><a name="SECTION00071000000000000000">Capturing a frame from a
+video sequence</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>OpenCV supports capturing images from a camera or a video file
+(AVI).
+    <p></p>
+  </li>
+  <li>Initializing capture from a camera:
+    <pre>CvCapture* capture = cvCaptureFromCAM(0); // capture from video device #0<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Initializing capture from a file:
+    <pre>CvCapture* capture = cvCaptureFromAVI("infile.avi");<br></pre>
+    <p>
+    </p>
+  </li>
+  <li>Capturing a frame:
+    <pre>IplImage* img = 0; <br>if(!cvGrabFrame(capture)){              // capture a frame <br>  printf("Could not grab a frame\n\7");<br>  exit(0);<br>}<br>img=cvRetrieveFrame(capture);           // retrieve the captured frame<br></pre>
+    <p>
+To obtain images from several cameras simultaneously, first grab an
+image from each camera. Retrieve the captured images after the grabbing
+is
+complete.
+    </p>
+    <p></p>
+  </li>
+  <li>Releasing the capture source:
+    <pre>cvReleaseCapture(&amp;capture);<br></pre>
+    <p>
+Note that the image captured by the device is allocated/released by the
+capture function. There is no need to release it explicitly.
+    </p>
+    <p></p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00072000000000000000">Getting/setting frame
+information</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Get capture device properties:
+    <pre>cvQueryFrame(capture); // this call is necessary to get correct <br>                       // capture properties<br>int frameH    = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT);<br>int frameW    = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH);<br>int fps       = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FPS);<br>int numFrames = (int) cvGetCaptureProperty(capture,  CV_CAP_PROP_FRAME_COUNT);<br></pre>
+    <p>
+The total frame count is relevant for video files only. It does not
+seem
+to be working properly.
+    </p>
+    <p></p>
+    <p></p>
+  </li>
+  <li>Get frame information:
+    <pre>float posMsec   =       cvGetCaptureProperty(capture, CV_CAP_PROP_POS_MSEC);<br>int posFrames   = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES);<br>float posRatio  =       cvGetCaptureProperty(capture, CV_CAP_PROP_POS_AVI_RATIO);<br></pre>
+    <p>
+Get the position of the captured frame in [msec] with respect to the
+first frame, or get its index where the first frame starts with an
+index
+of 0. The relative position (ratio) is 0 in the first frame and 1 in
+the last frame. This ratio is valid only for capturing images from a
+file.
+    </p>
+    <p></p>
+  </li>
+  <li>Set the index of the first frame to capture:
+    <pre>// start capturing from a relative position of 0.9 of a video file<br>cvSetCaptureProperty(capture, CV_CAP_PROP_POS_AVI_RATIO, (double)0.9);<br></pre>
+    <p>
+This only applies for capturing from a file. It does not seem to be
+working properly.
+    </p>
+    <p></p>
+  </li>
+</ul>
+<p>
+</p>
+<h2><a name="SECTION00073000000000000000">Saving a video file</a>
+</h2>
+<p>
+</p>
+<ul>
+  <li>Initializing a video writer:
+    <pre>CvVideoWriter *writer = 0;<br>int isColor = 1;<br>int fps     = 25;  // or 30<br>int frameW  = 640; // 744 for firewire cameras<br>int frameH  = 480; // 480 for firewire cameras<br>writer=cvCreateVideoWriter("out.avi",CV_FOURCC('P','I','M','1'),<br>                           fps,cvSize(frameW,frameH),isColor);<br></pre>
+    <p>
+Other possible codec codes:
+    </p>
+    <pre>CV_FOURCC('P','I','M','1')    = MPEG-1 codec<br>CV_FOURCC('M','J','P','G')    = motion-jpeg codec (does not work well)<br>CV_FOURCC('M', 'P', '4', '2') = MPEG-4.2 codec<br>CV_FOURCC('D', 'I', 'V', '3') = MPEG-4.3 codec<br>CV_FOURCC('D', 'I', 'V', 'X') = MPEG-4 codec<br>CV_FOURCC('U', '2', '6', '3') = H263 codec<br>CV_FOURCC('I', '2', '6', '3') = H263I codec<br>CV_FOURCC('F', 'L', 'V', '1') = FLV1 codec<br></pre>
+    <p>
+A codec code of -1 will open a codec selection window (in windows).
+    </p>
+    <p></p>
+    <p></p>
+  </li>
+  <li>Writing the video file:
+    <pre>IplImage* img = 0; <br>int nFrames = 50;<br>for(i=0;i&lt;nFrames;i++){<br>  cvGrabFrame(capture);          // capture a frame<br>  img=cvRetrieveFrame(capture);  // retrieve the captured frame<br>  cvWriteFrame(writer,img);      // add the frame to the file<br>}<br></pre>
+    <p>
+To view the captured frames during capture, add the following in the
+loop:
+    </p>
+    <pre>cvShowImage("mainWin", img); <br>key=cvWaitKey(20);           // wait 20 ms<br></pre>
+    <p>
+Note that without the 20[msec] delay the captured sequence is not
+displayed properly.
+    </p>
+    <p></p>
+  </li>
+  <li>Releasing the video writer:
+    <pre>cvReleaseVideoWriter(&amp;writer);<br></pre>
+    <p>
+    </p>
+  </li>
+</ul>
+<p>
+</p>
+<hr><!--Navigation Panel-->
+<img alt="next_inactive"
+ src="file:/usr/share/latex2html/icons/nx_grp_g.png" align="bottom"
+ border="0" height="24" width="81"> <img alt="up"
+ src="file:/usr/share/latex2html/icons/up_g.png" align="bottom"
+ border="0" height="24" width="26"> <img alt="previous"
+ src="file:/usr/share/latex2html/icons/prev_g.png" align="bottom"
+ border="0" height="24" width="63"> <br>
+<!--End of Navigation Panel-->
+<address>Gady Agam
+2006-03-31
+</address>
+</body>
+</html>
