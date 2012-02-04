@@ -11,3 +11,4 @@ The content in folders are ordered in the following rule:
 * *3rd_party* - 3rd party source code
 * *misc* - downloaded files and some other resources
 
+**IMPORTANT: the code is experimental and untested, use with your own risk !!**
