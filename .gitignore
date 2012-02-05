@@ -1,5 +1,13 @@
-*.files
-*.out
+*.a
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+cscope.files
+cscope.out
+android/build.xml
+android/local.properties
+android/proguard.cfg
+android/project.properties
 android/lib/
 android/gen/
 android/libs/
