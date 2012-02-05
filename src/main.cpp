@@ -26,7 +26,8 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated);
 int main()
 {
 	// StereoCalib("test.txt", 9, 6, 1);
-	IplImage* img1 = cvLoadImage("../data/test_l.jpg",0);
+	IplImage* img1 = cvLoadImage("../data/test_l.jpg",1);
+	IplImage* img2 = cvLoadImage("../data/test_r.jpg",1);
 	cvSaveImage("test.pgm", img1);
 	return 0;
 }
