@@ -4,4 +4,4 @@ include_directories(include ../cxcore/include ../cv/include)
 file(GLOB highgui_src src/*.cpp)
 add_library(highgui STATIC ${highgui_src})
 
-target_link_libraries(highgui cv cxcore)
+# target_link_libraries(highgui cv cxcore)

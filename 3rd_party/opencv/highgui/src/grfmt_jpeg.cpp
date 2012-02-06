@@ -1060,8 +1060,11 @@ bool GrFmtJpegReader::ReadData( uchar* data, int step, int color )
                             td = lstrm.GetByte();
                             ta = td & 15;
                             td >>= 4;
-                            if( !(ta <= 3 && m_is_ta[ta] && 
-                                  td <= 3 && m_is_td[td] &&
+                            // if( !(ta <= 3 && m_is_ta[ta] && 
+                            //       td <= 3 && m_is_td[td] &&
+                            //       m_is_tq[m_ci[c].tq]) )
+                            if( !((ta <= 3 && m_is_ta[ta]) && 
+                                  (td <= 3 && m_is_td[td]) &&
                                   m_is_tq[m_ci[c].tq]) )
                                 goto decoding_end;
 

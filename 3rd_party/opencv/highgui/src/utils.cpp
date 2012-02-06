@@ -615,7 +615,8 @@ cvConvertImage( const CvArr* srcarr, CvArr* dstarr, int flags )
         }
     }
 
-    if( src_cn != dst_cn || src_cn == 3 && swap_rb )
+    // if( src_cn != dst_cn || src_cn == 3 && swap_rb )
+    if( (src_cn != dst_cn || src_cn == 3) && swap_rb )
     {
         uchar *s = src->data.ptr, *d = dst->data.ptr;
         int s_step = src->step, d_step = dst->step;

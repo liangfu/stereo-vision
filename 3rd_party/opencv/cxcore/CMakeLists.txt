@@ -6,4 +6,4 @@ include_directories(include)
 file(GLOB cxcore_src src/*.cpp)
 add_library(cxcore STATIC ${cxcore_src})
 
-target_link_libraries(cxcore dl)
+# target_link_libraries(cxcore dl)

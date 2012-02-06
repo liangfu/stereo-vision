@@ -23,6 +23,10 @@ using std::string;
 static void
 StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated);
 
+bool operator==(CvSize s1, CvSize s2){
+	return (s1.height==s2.height) && (s1.width==s2.width);
+}
+
 int main()
 {
 	StereoCalib("test.txt", 9, 6, 1);
@@ -33,6 +37,12 @@ int main()
 		return -1;
 	}
 
+    CvSize imageSize = {0,0};
+	imageSize = cvGetSize(img1);
+	assert(cvGetSize(img2) == cvGetSize(img1));
+    // bool isVerticalStereo = false; //OpenCV can handle left-right
+	// int useUncalibrated = 1;
+	
 #if 0
     // ARRAY AND VECTOR STORAGE:
     double M1[3][3], M2[3][3], D1[5], D2[5];
@@ -46,16 +56,37 @@ int main()
     CvMat _E = cvMat(3, 3, CV_64F, E );
     CvMat _F = cvMat(3, 3, CV_64F, F );
 
-    CvSize imageSize = {0,0};
-    bool isVerticalStereo = false;//OpenCV can handle left-right
-
     vector<CvPoint2D32f> points[2];
     CvMat _imagePoints1 = cvMat(1, N, CV_32FC2, &points[0][0] );
     CvMat _imagePoints2 = cvMat(1, N, CV_32FC2, &points[1][0] );
 
 #endif	
 	
+#if 1
+	CvMat* mx1 = cvCreateMat( imageSize.height,
+							  imageSize.width, CV_32F );
+	CvMat* my1 = cvCreateMat( imageSize.height,
+							  imageSize.width, CV_32F );
+	CvMat* mx2 = cvCreateMat( imageSize.height,
+							  imageSize.width, CV_32F );
+	CvMat* my2 = cvCreateMat( imageSize.height,
+							  imageSize.width, CV_32F );
 
+	CvMat* img1r = cvCreateMat( imageSize.height,
+								imageSize.width, CV_8U );
+	CvMat* img2r = cvCreateMat( imageSize.height,
+								imageSize.width, CV_8U );
+
+	CvMat* disp = cvCreateMat( imageSize.height,
+							   imageSize.width, CV_16S );
+	CvMat* vdisp = cvCreateMat( imageSize.height,
+								imageSize.width, CV_8U );
+	// CvMat* pair;
+	// double R1[3][3], R2[3][3], P1[3][4], P2[3][4];
+	// CvMat _R1 = cvMat(3, 3, CV_64F, R1);
+	// CvMat _R2 = cvMat(3, 3, CV_64F, R2);
+#endif
+	
 #if 0
 	// HARTLEY'S METHOD
 	// use intrinsic parameters of each camera, but
@@ -90,72 +121,104 @@ int main()
 #endif 
 
 #if 0
-	if( !isVerticalStereo )
-		pair = cvCreateMat( imageSize.height, imageSize.width*2,
-							CV_8UC3 );
-	else
-		pair = cvCreateMat( imageSize.height*2, imageSize.width,
-							CV_8UC3 );
+	// if( !isVerticalStereo ){
+	// 	pair = cvCreateMat( imageSize.height, imageSize.width*2,
+	// 						CV_8UC3 );
+	// } else {
+	// 	pair = cvCreateMat( imageSize.height*2, imageSize.width,
+	// 						CV_8UC3 );
+	// }
 	//Setup for finding stereo corrrespondences
 	CvStereoBMState *BMState = cvCreateStereoBMState();
 	assert(BMState != 0);
 	BMState->preFilterSize=41;
 	BMState->preFilterCap=31;
+
+	// window size
 	BMState->SADWindowSize=41;
+
+	// depth range 
 	BMState->minDisparity=-64;
 	BMState->numberOfDisparities=128;
+
 	BMState->textureThreshold=10;
 	BMState->uniquenessRatio=15;
-#endif
+// #endif
 
-#if 0
-	IplImage* img1=cvLoadImage(imageNames[0][i].c_str(),0);
-	IplImage* img2=cvLoadImage(imageNames[1][i].c_str(),0);
+// #if 1
+	// IplImage* img1=cvLoadImage(imageNames[0][i].c_str(),0);
+	// IplImage* img2=cvLoadImage(imageNames[1][i].c_str(),0);
 	if( img1 && img2 )
 	{
-		CvMat part;
+		// CvMat part;
+		// void cvRemap( const CvArr* src, CvArr* dst,
+		//               const CvArr* mapx, const CvArr* mapy)
+		// FUNCTION: dst(x,y)<-src(mapx(x,y),mapy(x,y))
 		cvRemap( img1, img1r, mx1, my1 );
 		cvRemap( img2, img2r, mx2, my2 );
-		if( !isVerticalStereo || useUncalibrated != 0 )
+		// if( !isVerticalStereo || useUncalibrated != 0 )
 		{
 			// When the stereo camera is oriented vertically,
 			// useUncalibrated==0 does not transpose the
 			// image, so the epipolar lines in the rectified
 			// images are vertical. Stereo correspondence
 			// function does not support such a case.
-			cvFindStereoCorrespondenceBM( img1r, img2r, disp,
+
+			// cvFindStereoCorrespondenceBM( img1r, img2r, disp,
+			// 							  BMState);
+			cvFindStereoCorrespondenceBM( img1, img2, disp,
 										  BMState);
+
 			cvNormalize( disp, vdisp, 0, 256, CV_MINMAX );
 		}
-		if( !isVerticalStereo )
-		{
-			cvGetCols( pair, &part, 0, imageSize.width );
-			cvCvtColor( img1r, &part, CV_GRAY2BGR );
-			cvGetCols( pair, &part, imageSize.width,
-					   imageSize.width*2 );
-			cvCvtColor( img2r, &part, CV_GRAY2BGR );
-			for( j = 0; j < imageSize.height; j += 16 )
-				cvLine( pair, cvPoint(0,j),
-                        cvPoint(imageSize.width*2,j),
-                        CV_RGB(0,255,0));
-		}
-		else
-		{
-			cvGetRows( pair, &part, 0, imageSize.height );
-			cvCvtColor( img1r, &part, CV_GRAY2BGR );
-			cvGetRows( pair, &part, imageSize.height,
-					   imageSize.height*2 );
-			cvCvtColor( img2r, &part, CV_GRAY2BGR );
-			for( j = 0; j < imageSize.width; j += 16 )
-				cvLine( pair, cvPoint(j,0),
-                        cvPoint(j,imageSize.height*2),
-                        CV_RGB(0,255,0));
-		}
+		// if( !isVerticalStereo )
+		// {
+		// 	cvGetCols( pair, &part, 0, imageSize.width );
+		// 	cvCvtColor( img1r, &part, CV_GRAY2BGR );
+		// 	cvGetCols( pair, &part, imageSize.width,
+		// 			   imageSize.width*2 );
+		// 	cvCvtColor( img2r, &part, CV_GRAY2BGR );
+		// 	for( j = 0; j < imageSize.height; j += 16 )
+		// 		cvLine( pair, cvPoint(0,j),
+        //                 cvPoint(imageSize.width*2,j),
+        //                 CV_RGB(0,255,0));
+		// }
+		// else
+		// {
+		// 	cvGetRows( pair, &part, 0, imageSize.height );
+		// 	cvCvtColor( img1r, &part, CV_GRAY2BGR );
+		// 	cvGetRows( pair, &part, imageSize.height,
+		// 			   imageSize.height*2 );
+		// 	cvCvtColor( img2r, &part, CV_GRAY2BGR );
+		// 	for( j = 0; j < imageSize.width; j += 16 )
+		// 		cvLine( pair, cvPoint(j,0),
+        //                 cvPoint(j,imageSize.height*2),
+        //                 CV_RGB(0,255,0));
+		// }
 		// cvShowImage( "rectified", pair );
-	}				
+	}
+#else
+	// image_left and image_right are the input 8-bit single-channel images
+	// from the left and the right cameras, respectively
+	// CvSize size = cvGetSize(image_left);
+	CvMat* disparity_left = cvCreateMat( imageSize.height, imageSize.width,
+										 CV_16S );
+	CvMat* disparity_right = cvCreateMat( imageSize.height, imageSize.width,
+										  CV_16S );
+	CvStereoGCState* state = cvCreateStereoGCState( 16, 2 );
+	cvFindStereoCorrespondenceGC( img1, img2,
+								  disparity_left, disparity_right, state, 0 );
+	cvReleaseStereoGCState( &state );
+
+	CvMat* disparity_left_visual =
+		cvCreateMat( imageSize.height, imageSize.width, CV_8U );
+	// because the values in the left disparity images are usually negative
+	cvConvertScale( disparity_left, disparity_left_visual, -16 );
+	// cvSave( "disparity.pgm", disparity_left_visual );
+	cvSaveImage( "disparity.pgm", disparity_left_visual );
 #endif
 
-#if 0
+#if 1
 	cvReleaseImage( &img1 );
 	cvReleaseImage( &img2 );
 #endif
@@ -171,8 +234,13 @@ int main()
 	cvReleaseMat( &disp );
 #endif
 	
-	cvSaveImage("test_img1.pgm", img1);
-	cvSaveImage("test_img2.pgm", img2);
+	// cvSaveImage("test_img1.pgm", img1);
+	// cvSaveImage("test_img2.pgm", img2);
+	// cvSaveImage("disparity.pgm", disp);
+	// cvSaveImage("disparity.pgm", disparity_left);
+#ifdef __linux__
+	system("display disparity.pgm");
+#endif //__linux__
 	return 0;
 }
 
@@ -369,15 +437,16 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated)
         CvMat* my1 = cvCreateMat( imageSize.height,
             imageSize.width, CV_32F );
         CvMat* mx2 = cvCreateMat( imageSize.height,
-
             imageSize.width, CV_32F );
         CvMat* my2 = cvCreateMat( imageSize.height,
             imageSize.width, CV_32F );
+
         CvMat* img1r = cvCreateMat( imageSize.height,
             imageSize.width, CV_8U );
         CvMat* img2r = cvCreateMat( imageSize.height,
             imageSize.width, CV_8U );
-        CvMat* disp = cvCreateMat( imageSize.height,
+
+		CvMat* disp = cvCreateMat( imageSize.height,
             imageSize.width, CV_16S );
         CvMat* vdisp = cvCreateMat( imageSize.height,
             imageSize.width, CV_8U );

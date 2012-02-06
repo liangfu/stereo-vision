@@ -93,7 +93,7 @@ icvDestroyContext(CvContext* context)
 #if defined WIN32 || defined WIN64
     static DWORD g_TlsIndex = TLS_OUT_OF_INDEXES;
 #else
-    static pthread_key_t g_TlsIndex;
+    // static pthread_key_t g_TlsIndex; // commented by liangfu
 #endif
 
 static CvContext*
@@ -421,7 +421,7 @@ void icvPthreadDestructor(void* key_val)
     icvDestroyContext( context );
 }
 
-int pthrerr = pthread_key_create( &g_TlsIndex, icvPthreadDestructor );
+// int pthrerr = pthread_key_create( &g_TlsIndex, icvPthreadDestructor );
 
 #endif
 
