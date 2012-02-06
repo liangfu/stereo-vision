@@ -25,10 +25,154 @@ StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated);
 
 int main()
 {
-	// StereoCalib("test.txt", 9, 6, 1);
-	IplImage* img1 = cvLoadImage("../data/test_l.jpg",1);
-	IplImage* img2 = cvLoadImage("../data/test_r.jpg",1);
-	cvSaveImage("test.pgm", img1);
+	StereoCalib("test.txt", 9, 6, 1);
+	IplImage* img1 = cvLoadImage("../data/test_l.jpg",0);
+	IplImage* img2 = cvLoadImage("../data/test_r.jpg",0);
+	if (img1==NULL || img2==NULL) {
+		printf("Can't read one of the images\n");
+		return -1;
+	}
+
+#if 0
+    // ARRAY AND VECTOR STORAGE:
+    double M1[3][3], M2[3][3], D1[5], D2[5];
+    double R[3][3], T[3], E[3][3], F[3][3];
+    CvMat _M1 = cvMat(3, 3, CV_64F, M1 );
+    CvMat _M2 = cvMat(3, 3, CV_64F, M2 );
+    CvMat _D1 = cvMat(1, 5, CV_64F, D1 );
+    CvMat _D2 = cvMat(1, 5, CV_64F, D2 );
+    CvMat _R = cvMat(3, 3, CV_64F, R );
+    CvMat _T = cvMat(3, 1, CV_64F, T );
+    CvMat _E = cvMat(3, 3, CV_64F, E );
+    CvMat _F = cvMat(3, 3, CV_64F, F );
+
+    CvSize imageSize = {0,0};
+    bool isVerticalStereo = false;//OpenCV can handle left-right
+
+    vector<CvPoint2D32f> points[2];
+    CvMat _imagePoints1 = cvMat(1, N, CV_32FC2, &points[0][0] );
+    CvMat _imagePoints2 = cvMat(1, N, CV_32FC2, &points[1][0] );
+
+#endif	
+	
+
+#if 0
+	// HARTLEY'S METHOD
+	// use intrinsic parameters of each camera, but
+	// compute the rectification transformation directly
+	// from the fundamental matrix
+	if( useUncalibrated == 1 )
+	{
+		double H1[3][3], H2[3][3], iM[3][3];
+		CvMat _H1 = cvMat(3, 3, CV_64F, H1);
+		CvMat _H2 = cvMat(3, 3, CV_64F, H2);
+		CvMat _iM = cvMat(3, 3, CV_64F, iM);
+		//Just to show you could have independently used F
+		if( useUncalibrated == 2 ){
+			cvFindFundamentalMat( &_imagePoints1,
+								  &_imagePoints2, &_F);
+		}
+		cvStereoRectifyUncalibrated( &_imagePoints1,
+									 &_imagePoints2, &_F,
+									 imageSize,
+									 &_H1, &_H2, 3);
+		cvInvert(&_M1, &_iM);
+		cvMatMul(&_H1, &_M1, &_R1);
+		cvMatMul(&_iM, &_R1, &_R1);
+		cvInvert(&_M2, &_iM);
+		cvMatMul(&_H2, &_M2, &_R2);
+		cvMatMul(&_iM, &_R2, &_R2);
+		//Precompute map for cvRemap()
+		cvInitUndistortRectifyMap(&_M1,&_D1,&_R1,&_M1,mx1,my1);
+
+		cvInitUndistortRectifyMap(&_M2,&_D1,&_R2,&_M2,mx2,my2);
+	}
+#endif 
+
+#if 0
+	if( !isVerticalStereo )
+		pair = cvCreateMat( imageSize.height, imageSize.width*2,
+							CV_8UC3 );
+	else
+		pair = cvCreateMat( imageSize.height*2, imageSize.width,
+							CV_8UC3 );
+	//Setup for finding stereo corrrespondences
+	CvStereoBMState *BMState = cvCreateStereoBMState();
+	assert(BMState != 0);
+	BMState->preFilterSize=41;
+	BMState->preFilterCap=31;
+	BMState->SADWindowSize=41;
+	BMState->minDisparity=-64;
+	BMState->numberOfDisparities=128;
+	BMState->textureThreshold=10;
+	BMState->uniquenessRatio=15;
+#endif
+
+#if 0
+	IplImage* img1=cvLoadImage(imageNames[0][i].c_str(),0);
+	IplImage* img2=cvLoadImage(imageNames[1][i].c_str(),0);
+	if( img1 && img2 )
+	{
+		CvMat part;
+		cvRemap( img1, img1r, mx1, my1 );
+		cvRemap( img2, img2r, mx2, my2 );
+		if( !isVerticalStereo || useUncalibrated != 0 )
+		{
+			// When the stereo camera is oriented vertically,
+			// useUncalibrated==0 does not transpose the
+			// image, so the epipolar lines in the rectified
+			// images are vertical. Stereo correspondence
+			// function does not support such a case.
+			cvFindStereoCorrespondenceBM( img1r, img2r, disp,
+										  BMState);
+			cvNormalize( disp, vdisp, 0, 256, CV_MINMAX );
+		}
+		if( !isVerticalStereo )
+		{
+			cvGetCols( pair, &part, 0, imageSize.width );
+			cvCvtColor( img1r, &part, CV_GRAY2BGR );
+			cvGetCols( pair, &part, imageSize.width,
+					   imageSize.width*2 );
+			cvCvtColor( img2r, &part, CV_GRAY2BGR );
+			for( j = 0; j < imageSize.height; j += 16 )
+				cvLine( pair, cvPoint(0,j),
+                        cvPoint(imageSize.width*2,j),
+                        CV_RGB(0,255,0));
+		}
+		else
+		{
+			cvGetRows( pair, &part, 0, imageSize.height );
+			cvCvtColor( img1r, &part, CV_GRAY2BGR );
+			cvGetRows( pair, &part, imageSize.height,
+					   imageSize.height*2 );
+			cvCvtColor( img2r, &part, CV_GRAY2BGR );
+			for( j = 0; j < imageSize.width; j += 16 )
+				cvLine( pair, cvPoint(j,0),
+                        cvPoint(j,imageSize.height*2),
+                        CV_RGB(0,255,0));
+		}
+		// cvShowImage( "rectified", pair );
+	}				
+#endif
+
+#if 0
+	cvReleaseImage( &img1 );
+	cvReleaseImage( &img2 );
+#endif
+
+#if 0
+	cvReleaseStereoBMState(&BMState);
+	cvReleaseMat( &mx1 );
+	cvReleaseMat( &my1 );
+	cvReleaseMat( &mx2 );
+	cvReleaseMat( &my2 );
+	cvReleaseMat( &img1r );
+	cvReleaseMat( &img2r );
+	cvReleaseMat( &disp );
+#endif
+	
+	cvSaveImage("test_img1.pgm", img1);
+	cvSaveImage("test_img2.pgm", img2);
 	return 0;
 }
 
@@ -42,6 +186,7 @@ int main()
 static void
 StereoCalib(const char* imageList, int nx, int ny, int useUncalibrated)
 {
+	return; // this function is temperately unloaded in main entry..
     int displayCorners = 0;
     int showUndistorted = 1;
     bool isVerticalStereo = false;//OpenCV can handle left-right
