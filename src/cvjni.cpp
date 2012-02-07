@@ -150,6 +150,7 @@ IplImage* getIplImageFromIntArray(JNIEnv* env, jintArray array_data,
 	return image;
 }
 
+
 #ifdef __cplusplus
 }
 #endif

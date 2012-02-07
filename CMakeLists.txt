@@ -12,7 +12,9 @@ add_subdirectory(3rd_party/opencv/cxcore/)
 add_subdirectory(3rd_party/opencv/cv/)
 add_subdirectory(3rd_party/opencv/highgui)
 
-add_executable(stereovision src/main.cpp)
+add_executable(stereovision src/main.cpp 
+  src/svdisparity.cpp 
+  src/svfeature.cpp)
 target_link_libraries(stereovision cv highgui cxcore pthread)
 
 install(TARGETS stereovision
