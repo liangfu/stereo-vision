@@ -62,15 +62,16 @@ void createDisparityMapBM(CvArr * img1, CvArr * img2,
 
 			// cvNormalize( disp, vdisp, 0, 256, CV_MINMAX );
 		}
-	cvReleaseStereoBMState(&BMState);
+		cvReleaseStereoBMState(&BMState);
 
 
-	CvMat* disparity_left_visual =
-		cvCreateMat( imageSize.height, imageSize.width, CV_8U );
-	// because the values in the left disparity images are usually negative
-	cvConvertScale( disp, disparity_left_visual, 1 );
-	// cvSave( "disparity.pgm", disparity_left_visual );
-	cvSaveImage( "disparity.pgm", disparity_left_visual );
+		CvMat* disparity_left_visual =
+			cvCreateMat( imageSize.height, imageSize.width, CV_8U );
+		// because the values in the left disparity images are
+		// usually negative
+		cvConvertScale( disp, disparity_left_visual, 1 );
+		// cvSave( "disparity.pgm", disparity_left_visual );
+		cvSaveImage( "disparity.pgm", disparity_left_visual );
 	}
 }
 

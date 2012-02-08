@@ -3,7 +3,7 @@
  * @author Liangfu Chen <chenclf@gmail.com>
  * @date   Mon Feb  6 21:29:57 2012
  * 
- * @brief  
+ * @brief  Utility functions that is commonly used in the project
  * 
  * 
  */

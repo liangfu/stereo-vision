@@ -44,7 +44,8 @@ void extractFeatureSURF(CvArr * pImage, bool saveImage)
 	cvReleaseMemStorage(&storage);
 }
 
-void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB)
+void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
+					   const bool saveImage)
 {
 	// Load two images and allocate other structures
 	// IplImage* imgA = cvLoadImage("image0.png", CV_LOAD_IMAGE_GRAYSCALE);
@@ -53,7 +54,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB)
 	CvSize img_sz = cvGetSize( imgA );
 	int win_size = 15;
 
-	IplImage* imgC = cvLoadImage("OpticalFlow1.png", CV_LOAD_IMAGE_UNCHANGED);
+	IplImage* imgC;// = cvLoadImage("OpticalFlow1.png", CV_LOAD_IMAGE_UNCHANGED);
 
 	// Get the features for tracking
 	IplImage* eig_image = cvCreateImage( img_sz, IPL_DEPTH_32F, 1 );
@@ -137,5 +138,5 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB)
 	// 						  cvRound( cornersB[i].y ) );
 	// 	cvLine( imgC, p0, p1, CV_RGB(255,0,0), 2 );
 	// }
-	svShowImage(imgC);
+	if (saveImage) {svShowImage(imgC);}
 }

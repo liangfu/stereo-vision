@@ -59,10 +59,9 @@ int main(int argc, char* argv[])
 	cvReleaseImage( &img1 );
 	cvReleaseImage( &img2 );
 	
-	// cvSaveImage("disparity.pgm", disp);
-	// cvSaveImage("disparity.pgm", disparity_left);
 #ifdef __linux__
 	// show dispairty map with external program
+	fprintf(stderr, "display: disparity");
 	system("display disparity.pgm"); 
 #endif //__linux__
 	return 0;

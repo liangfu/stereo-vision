@@ -1,3 +1,9 @@
+# Makefile for stereo vision project 
+# by Liangfu Chen, 2011~2012
+
+release-flags = -O2
+debug-flags = -Wall -g
+
 src = main.cpp svdisparity.cpp svfeature.cpp
 
 extern_inc = -I../3rd_party/opencv/cv/include \
@@ -10,6 +16,6 @@ extern_lib = -L../3rd_party/opencv/cv \
 	-ldl # -lpthread
 
 first:
-	g++ -Wall -g $(src) -o stereovision $(extern_lib) $(extern_inc)
+	g++ $(debug-flags) $(src) -o stereovision $(extern_lib) $(extern_inc)
 	./stereovision
 
