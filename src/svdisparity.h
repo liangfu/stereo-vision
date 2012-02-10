@@ -16,10 +16,10 @@
 
 // namespace sv{
 
-void createDisparityMapBM(CvArr * img1, CvArr * img2,
-						  int numberOfDisparities, int maxIters);
-void createDisparityMapGC(CvArr * img1, CvArr * img2,
-						  int numberOfDisparities, int maxIters);
+CvMat * createDisparityMapBM(CvArr * img1, CvArr * img2,
+							 int numberOfDisparities, int maxIters);
+CvMat * createDisparityMapGC(CvArr * img1, CvArr * img2,
+							 int numberOfDisparities, int maxIters);
 
 // }
 

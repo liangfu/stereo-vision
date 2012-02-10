@@ -15,8 +15,8 @@
 #include "highgui.h"
 
 // void extractSURFFeature();
-void extractFeatureSURF(CvArr * pImage, const bool saveImage = 0);
+void extractFeatureSURF(CvArr * pImage, const bool saveImage = 1);
 void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
-					   const bool saveImage = 0);
+					   const bool saveImage = 1);
 	
 #endif // __SV_FEATURE_H__

@@ -11,8 +11,8 @@
 #include "svdisparity.h"
 
 
-void createDisparityMapBM(CvArr * img1, CvArr * img2,
-						  int numberOfDisparities, int maxIters)
+CvMat * createDisparityMapBM(CvArr * img1, CvArr * img2,
+							 int numberOfDisparities, int maxIters)
 {
 	CvSize imageSize = cvGetSize(img1);
 	
@@ -65,19 +65,18 @@ void createDisparityMapBM(CvArr * img1, CvArr * img2,
 		cvReleaseStereoBMState(&BMState);
 
 
-		CvMat* disparity_left_visual =
+		CvMat * disparity_left_visual =
 			cvCreateMat( imageSize.height, imageSize.width, CV_8U );
 		// because the values in the left disparity images are
 		// usually negative
 		cvConvertScale( disp, disparity_left_visual, 1 );
 		// cvSave( "disparity.pgm", disparity_left_visual );
-		cvSaveImage( "disparity.pgm", disparity_left_visual );
-	}
+		return disparity_left_visual;
+		//cvSaveImage( ".out/disparity.pgm", disparity_left_visual );
+	}else {return 0;}
 }
 
-
-
-void createDisparityMapGC(CvArr * img1, CvArr * img2,
+CvMat * createDisparityMapGC(CvArr * img1, CvArr * img2,
 						  int numberOfDisparities, int maxIters)
 {
 	CvSize imageSize = cvGetSize(img1);
@@ -104,5 +103,6 @@ void createDisparityMapGC(CvArr * img1, CvArr * img2,
 	// because the values in the left disparity images are usually negative
 	cvConvertScale( disparity_left, disparity_left_visual, -16 );
 	// cvSave( "disparity.pgm", disparity_left_visual );
-	cvSaveImage( "disparity.pgm", disparity_left_visual );
+	//cvSaveImage( "disparity.pgm", disparity_left_visual );
+	return disparity_left_visual;
 }

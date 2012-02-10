@@ -15,7 +15,12 @@ extern_lib = -L../3rd_party/opencv/cv \
 	-lcv -lhighgui -lcxcore \
 	-ldl # -lpthread
 
-first:
+first:.misc tmp
 	g++ $(debug-flags) $(src) -o stereovision $(extern_lib) $(extern_inc)
 	./stereovision
 
+.misc:
+	mkdir .misc
+
+tmp:
+	mkdir tmp

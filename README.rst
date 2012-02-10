@@ -18,4 +18,8 @@ The content in folders are ordered in the following rule:
 * *misc* - downloaded files and some other resources
 * *src* - source code repository
 
+This project build-in with opencv-1.x, which does not mimic the MATLAB syntax.
+And it can be easily ported to Android platform with the help of recent NDK 
+releases.
+
 **IMPORTANT: the code is experimental and untested, use with your own risk !!**

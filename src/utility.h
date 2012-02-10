@@ -13,8 +13,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
 
 #include "cv.h"
+
+using std::vector;
 
 inline bool operator==(CvSize s1, CvSize s2){
 	return (s1.height==s2.height) && (s1.width==s2.width);
@@ -22,8 +25,8 @@ inline bool operator==(CvSize s1, CvSize s2){
 
 #ifdef __linux__
 inline void svShowImage(CvArr * im){
-	cvSaveImage("tmp.pgm", im);
-	system("display tmp.pgm");
+	cvSaveImage("tmp/tmp.pgm", im);
+	system("display tmp/tmp.pgm");
 }
 #endif
 
