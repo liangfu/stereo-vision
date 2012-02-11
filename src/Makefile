@@ -4,7 +4,7 @@
 release-flags = -O2
 debug-flags = -Wall -g
 
-src = main.cpp svdisparity.cpp svfeature.cpp
+src = main.cpp svdisparity.cpp svfeature.cpp svcalib.cpp svrectify.cpp
 
 extern_inc = -I../3rd_party/opencv/cv/include \
 	-I../3rd_party/opencv/cxcore/include \

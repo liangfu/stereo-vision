@@ -9,8 +9,10 @@
  */
 
 #include "svfeature.h"
+#include "svcalib.h"
+#include "svrectify.h"
 
-#include "utility.h"
+#include "svutility.h"
 
 const int MAX_CORNERS = 500;
 
@@ -71,6 +73,9 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 						   0.05, 5.0, 0, 
 						   3/* block_size */, 0/* use_harris */, 0.04 );
 
+	/* cvScale(eig_image, eig_image, 100, 0.00); */
+	/* svShowImage(eig_image); */
+
 	cvFindCornerSubPix( imgA, cornersA, corner_count, 
 						cvSize( win_size, win_size ),
 						cvSize( -1, -1 ), 
@@ -90,12 +95,19 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 
 	CvPoint2D32f* cornersB = new CvPoint2D32f[ MAX_CORNERS ];
 
+	// cvTermCriteria(
+	// 			   int    type,
+	// 			   int    max_iter,
+	// 			   double epsilon
+	// 			   );
 	cvCalcOpticalFlowPyrLK( imgA, imgB, pyrA, pyrB, 
 							cornersA, cornersB, corner_count, 
 							cvSize( win_size, win_size ), 5, 
 							features_found, feature_errors,
 							cvTermCriteria( CV_TERMCRIT_ITER | 
-											CV_TERMCRIT_EPS, 20, 0.3 ), 0 );
+											CV_TERMCRIT_EPS, 20, 0.3 ),0
+							/* 0 */ /* CV_LKFLOW_PYR_B_READY | CV_LKFLOW_PYR_A_READY */
+							/* CV_LKFLOW_INITIAL_GUESSES */ );
 
 	// Make an image of the results
 	// imgC->origin = ((IplImage*)imgB)->origin;
@@ -106,7 +118,11 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 
 	for( int k,i = k = 0; i < corner_count; i++ )
 	{
-		if( !features_found[i] ){ continue; }
+		if ( !features_found[i] ){ continue; }
+		if ( feature_errors[i]>550 ){
+			//fprintf(stderr, "", feature_errors[i]);
+			continue;
+		}
                 
 		// cornersB[k++] = cornersB[i];
 		// cvCircle( imgC, cvPointFrom32f(cornersB[i]),
@@ -121,6 +137,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 		// draw line between all match points
 		cvLine( imgC, p0, p1, CV_RGB(255,0,0), 1 );
 	}
+
 	int N = points[0].size();
 
 	assert(points[0].size()==points[0].size());
@@ -137,23 +154,27 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	CvMat _H2 = cvMat(3, 3, CV_64F, H2);
     CvMat _F = cvMat(3, 3, CV_64F, F );
 	// CvMat _iM = cvMat(3, 3, CV_64F, iM);
+	/* CvMat * status = cvCreateMat(1, points[0].size(), CV_8UC1); */
 
-	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F
+	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F/* , */
+						  /* CV_FM_RANSAC *//* , 1.0, 0.99, status */
 						  /* use RANSAC by default */);
-	
-	cvStereoRectifyUncalibrated( &_imagePoints1,
-								 &_imagePoints2, &_F,
-								 imageSize,
-								 &_H1, &_H2, 3);
+
+	// svStereoRectifyUncalibrated( &_imagePoints1,
+	// 							 &_imagePoints2, &_F,
+	// 							 imageSize,
+	// 							 &_H1, &_H2, 3/* threshold */);
+
 	// cvInvert(&_M1, &_iM);
 	// cvMatMul(&_H1, &_M1, &_R1);
 	// cvMatMul(&_iM, &_R1, &_R1);
 	// cvInvert(&_M2, &_iM);
 	// cvMatMul(&_H2, &_M2, &_R2);
 	// cvMatMul(&_iM, &_R2, &_R2);
+
 	cvSave("tmp/F.xml", &_F);
-	cvSave("tmp/H1.xml", &_H1);
-	cvSave("tmp/H2.xml", &_H2);
+	// cvSave("tmp/H1.xml", &_H1);
+	// cvSave("tmp/H2.xml", &_H2);
 	fprintf(stderr, "N: %d\n", N);
 
 	if (saveImage) {svShowImage(imgC);}

@@ -11,8 +11,8 @@
 #ifndef __SV_FEATURE_H__
 #define __SV_FEATURE_H__
 
-#include "cv.h"
-#include "highgui.h"
+#include <cv.h>
+#include <highgui.h>
 
 // void extractSURFFeature();
 void extractFeatureSURF(CvArr * pImage, const bool saveImage = 1);

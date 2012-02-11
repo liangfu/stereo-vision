@@ -20,7 +20,7 @@
 #include "svdisparity.h"
 #include "svfeature.h"
 
-#include "utility.h"
+#include "svutility.h"
 
 using std::vector;
 using std::string;
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 		printf("Can't read one of the images\n");
 		return -1;
 	}
-	extractFeatureSURF(im1_gray);
+	// extractFeatureSURF(im1_gray);
 	extractFeatureKLT(im1_gray, im2_gray);
 
     CvSize imageSize = {0,0};

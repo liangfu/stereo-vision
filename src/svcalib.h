@@ -14,8 +14,9 @@
 #include "cv.h"
 #include "highgui.h"
 
-#include "utility.h"
+#include "svutility.h"
 
-void stereoCalib(){}
+
+// void stereoCalib(){}
 
 #endif // __SV_CALIB_H__
