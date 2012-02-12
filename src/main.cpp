@@ -32,9 +32,12 @@ int main(int argc, char* argv[])
 {
 	// StereoCalib("test.txt", 9, 6, 1);
 #if 0
+	IplImage* img1 = cvLoadImage("../data/scene_l.jpg",1);
+	IplImage* img2 = cvLoadImage("../data/scene_r.jpg",1);
+#elif 0
 	IplImage* img1 = cvLoadImage("../data/test_l.jpg",1);
 	IplImage* img2 = cvLoadImage("../data/test_r.jpg",1);
-#else
+#elif 1
 	IplImage* img1 = cvLoadImage("../data/milkbox_test_l.jpg",1);
 	IplImage* img2 = cvLoadImage("../data/milkbox_test_r.jpg",1);
 #endif

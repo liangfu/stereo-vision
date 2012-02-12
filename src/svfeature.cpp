@@ -54,7 +54,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	// IplImage* imgB = cvLoadImage("image1.png", CV_LOAD_IMAGE_GRAYSCALE);
 
 	CvSize imageSize = cvGetSize( imgA );
-	int win_size = 15;
+	const int win_size = 15;
 
 	IplImage* imgC = cvCloneImage((IplImage*)imgB);
 	float alpha = 0.5f;
@@ -100,14 +100,22 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	// 			   int    max_iter,
 	// 			   double epsilon
 	// 			   );
+	// Actually run Pyramidal Lucas Kanade Optical Flow!!
 	cvCalcOpticalFlowPyrLK( imgA, imgB, pyrA, pyrB, 
 							cornersA, cornersB, corner_count, 
-							cvSize( win_size, win_size ), 5, 
+							cvSize( win_size, win_size ),
+							5/* maximum number of pyramids */, 
 							features_found, feature_errors,
+							// this criteria is important to
+							// control the result
 							cvTermCriteria( CV_TERMCRIT_ITER | 
-											CV_TERMCRIT_EPS, 20, 0.3 ),0
-							/* 0 */ /* CV_LKFLOW_PYR_B_READY | CV_LKFLOW_PYR_A_READY */
-							/* CV_LKFLOW_INITIAL_GUESSES */ );
+											CV_TERMCRIT_EPS, 20// 20
+											, 0.8// 0.3
+											),
+							0 /* enhancements */
+							/* CV_LKFLOW_PYR_B_READY | 
+							   CV_LKFLOW_PYR_A_READY |
+							   CV_LKFLOW_INITIAL_GUESSES */ );
 
 	// Make an image of the results
 	// imgC->origin = ((IplImage*)imgB)->origin;
@@ -119,7 +127,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	for( int k,i = k = 0; i < corner_count; i++ )
 	{
 		if ( !features_found[i] ){ continue; }
-		if ( feature_errors[i]>550 ){
+		if ( feature_errors[i]>950 ){
 			//fprintf(stderr, "", feature_errors[i]);
 			continue;
 		}
@@ -159,6 +167,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F/* , */
 						  /* CV_FM_RANSAC *//* , 1.0, 0.99, status */
 						  /* use RANSAC by default */);
+	if (saveImage) {svShowImage(imgC);}
 
 	// svStereoRectifyUncalibrated( &_imagePoints1,
 	// 							 &_imagePoints2, &_F,
@@ -177,5 +186,5 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	// cvSave("tmp/H2.xml", &_H2);
 	fprintf(stderr, "N: %d\n", N);
 
-	if (saveImage) {svShowImage(imgC);}
+	
 }

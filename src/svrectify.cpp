@@ -12,11 +12,11 @@
 #include "svrectify.h"
 
 
-void fractorizePPM(const CvArr& P, CvArr * A, CvArr * R, CvArr * t)
+void fractorizePPM(const CvArr * P, CvArr * A, CvArr * R, CvArr * t)
 {
 	double Q[3][3];
 	CvMat _Q = cvMat(3, 3, CV_64F, Q);
-	_Q = CvInvert(&P);
+	// cvInvert(P, _Q);
 }
 
 int
@@ -33,7 +33,7 @@ svStereoRectifyUncalibrated2(
 	
 	__END__;
 	
-	return CV_OK;
+	return 1;
 }
 
 
