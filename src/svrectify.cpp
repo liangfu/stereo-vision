@@ -25,13 +25,13 @@ svStereoRectifyUncalibrated2(
     const CvMat* F0, CvSize imgSize, CvMat* _H1, CvMat* _H2, double threshold )
 {
 
-	CV_FUNCNAME( "svStereoCalcHomographiesFromF" );
-	__BEGIN__;
+	// CV_FUNCNAME( "svStereoCalcHomographiesFromF" );
+	// __BEGIN__;
 	
 	
 	
 	
-	__END__;
+	// __END__;
 	
 	return 1;
 }

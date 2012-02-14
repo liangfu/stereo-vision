@@ -46,7 +46,7 @@ void extractFeatureSURF(CvArr * pImage, bool saveImage)
 	cvReleaseMemStorage(&storage);
 }
 
-void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
+bool extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 					   const bool saveImage)
 {
 	// Load two images and allocate other structures
@@ -110,7 +110,7 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 							// control the result
 							cvTermCriteria( CV_TERMCRIT_ITER | 
 											CV_TERMCRIT_EPS, 20// 20
-											, 0.8// 0.3
+											, 0.3// 0.3
 											),
 							0 /* enhancements */
 							/* CV_LKFLOW_PYR_B_READY | 
@@ -167,7 +167,17 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F/* , */
 						  /* CV_FM_RANSAC *//* , 1.0, 0.99, status */
 						  /* use RANSAC by default */);
-	if (saveImage) {svShowImage(imgC);}
+	// if (saveImage) {svShowImage(imgC);}
+
+    CvMat * _status = cvCreateMat(1, points[0].size(), CV_8UC1);//cvMat(1, N, CV_32FC2, &points[1][0] );
+	cvFindHomography( &_imagePoints1,
+					  &_imagePoints2, &_H1,
+					  // CV_LMEDS, 3, _status
+					  CV_RANSAC, 3, _status
+					  );
+	
+	imgC = cvCloneImage((IplImage*)imgB);
+	cvAddWeighted(imgC, alpha, imgA, 1.0f-alpha, 0.0, imgC);
 
 	// svStereoRectifyUncalibrated( &_imagePoints1,
 	// 							 &_imagePoints2, &_F,
@@ -182,9 +192,11 @@ void extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	// cvMatMul(&_iM, &_R2, &_R2);
 
 	cvSave("tmp/F.xml", &_F);
-	// cvSave("tmp/H1.xml", &_H1);
+	cvSave("tmp/H1.xml", &_H1);
+	cvSave("tmp/status.xml", _status);
 	// cvSave("tmp/H2.xml", &_H2);
 	fprintf(stderr, "N: %d\n", N);
 
-	
+	//if (saveImage) {svShowImage(imgC);}
+	return 0;
 }

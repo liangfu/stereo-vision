@@ -602,9 +602,12 @@ cvFindHomography( const CvMat* objectPoints, const CvMat* imagePoints,
 
     if( mask )
     {
-        CV_ASSERT( CV_IS_MASK_ARR(mask) && CV_IS_MAT_CONT(mask->type) &&
-            (mask->rows == 1 || mask->cols == 1) &&
-            mask->rows*mask->cols == count );
+        // CV_ASSERT( CV_IS_MASK_ARR(mask) && CV_IS_MAT_CONT(mask->type) &&
+        //     (mask->rows == 1 || mask->cols == 1) &&
+        //     mask->rows*mask->cols == count );
+        CV_ASSERT( CV_IS_MASK_ARR(mask) && CV_IS_MAT_CONT(mask->type));
+		CV_ASSERT( (mask->rows == 1 || mask->cols == 1) &&
+				   mask->rows*mask->cols == count );
         tempMask = mask;
     }
     else if( count > 4 )

@@ -68,7 +68,11 @@ int main(int argc, char* argv[])
 	CvMat * left_disparity =
 		createDisparityMap(im1_gray, im2_gray, numberOfDisparities, maxIters);
 	//cvSaveImage("tmp/disparity.pgm", left_disparity);
-	svShowImage(left_disparity);
+
+	if (left_disparity){
+		// svShowImage(left_disparity);
+	}
+	
 
 	cvReleaseImage( &img1 );
 	cvReleaseImage( &img2 );
