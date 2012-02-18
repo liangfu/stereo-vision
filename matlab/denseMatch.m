@@ -26,24 +26,25 @@
 function [dispMap, timeTaken]=denseMatch(rightImage, leftImage, ...
                                          corrWindowSize, dMin, dMax, ...
                                          method)
-% Grab the image information (metadata) of left image using the
-% function imfinfo
-leftImageInfo=imfinfo(leftImage);
-% Grab the image information (metadata) of right image using the
-% function imfinfo
-rightImageInfo=imfinfo(rightImage);
-% Since Dense Matching is applied on a grayscale image, determine
-% if the
-% input left image is already in grayscale or color
-if(getfield(leftImageInfo,'ColorType')=='truecolor')
-    % Read an image using imread function, convert from RGB color
-    % space to
-    % grayscale using rgb2gray function and assign it to variable
-    % leftImage
-    leftImage=rgb2gray(imread(leftImage));
-else if(getfield(leftImageInfo,'ColorType')=='grayscale')
-        % If the image is already in grayscale, then just read it.        
-        leftImage=imread(leftImage);
+try
+    % Grab the image information (metadata) of left image using the
+    % function imfinfo
+    leftImageInfo=imfinfo(leftImage);
+    % Grab the image information (metadata) of right image using the
+    % function imfinfo
+    rightImageInfo=imfinfo(rightImage);
+    % Since Dense Matching is applied on a grayscale image, determine
+    % if the
+    % input left image is already in grayscale or color
+    if(getfield(leftImageInfo,'ColorType')=='truecolor')
+        % Read an image using imread function, convert from RGB color
+        % space to
+        % grayscale using rgb2gray function and assign it to variable
+        % leftImage
+        leftImage=rgb2gray(imread(leftImage));
+    else if(getfield(leftImageInfo,'ColorType')=='grayscale')
+            % If the image is already in grayscale, then just read it.        
+            leftImage=imread(leftImage);
     else
         error(['The Color Type of Left Image is not acceptable. ' ...
                'Acceptable color types are truecolor or ' ...
@@ -63,12 +64,18 @@ else if(getfield(rightImageInfo,'ColorType')=='grayscale')
         % If the image is already in grayscale, then just read it.
         %       
         rightImage=imread(rightImage);
-    else
-        error(['The Color Type of Right Image is not acceptable. ' ...
-               'Acceptable color types are truecolor or ' ...
-               'grayscale.']);
-    end
+else
+    error(['The Color Type of Right Image is not acceptable. ' ...
+           'Acceptable color types are truecolor or ' ...
+           'grayscale.']);
 end
+end
+
+catch 
+    rightImage = rightImage;
+    leftImage = leftImage;
+end
+
 % Find the size (columns and rows) of the left image and assign the
 % rows to
 % variable nrLeft, and columns to variable ncLeft
@@ -83,7 +90,7 @@ end
 if(nrLeft==nrRight && ncLeft==ncRight)
 else
     error(['Both left and right images should have the same number ' ...
-           'of rows and columns');
+           'of rows and columns']);
 end
 % Convert the left and right images from uint8 to double
 leftImage=im2double(leftImage);

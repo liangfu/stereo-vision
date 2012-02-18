@@ -162,18 +162,21 @@ bool extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 	CvMat _H2 = cvMat(3, 3, CV_64F, H2);
     CvMat _F = cvMat(3, 3, CV_64F, F );
 	// CvMat _iM = cvMat(3, 3, CV_64F, iM);
-	/* CvMat * status = cvCreateMat(1, points[0].size(), CV_8UC1); */
+	CvMat * F_status = cvCreateMat(1, points[0].size(), CV_8UC1);
 
-	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F/* , */
-						  /* CV_FM_RANSAC *//* , 1.0, 0.99, status */
+	cvFindFundamentalMat( &_imagePoints1, &_imagePoints2, &_F,
+						  CV_FM_LMEDS// CV_FM_RANSAC
+						  ,
+						  0.5, 0.2, // 1.0, 0.99,
+						  F_status
 						  /* use RANSAC by default */);
 	// if (saveImage) {svShowImage(imgC);}
 
-    CvMat * _status = cvCreateMat(1, points[0].size(), CV_8UC1);//cvMat(1, N, CV_32FC2, &points[1][0] );
+    CvMat * H_status = cvCreateMat(1, points[0].size(), CV_8UC1);//cvMat(1, N, CV_32FC2, &points[1][0] );
 	cvFindHomography( &_imagePoints1,
 					  &_imagePoints2, &_H1,
 					  // CV_LMEDS, 3, _status
-					  CV_RANSAC, 3, _status
+					  CV_RANSAC, 3, H_status
 					  );
 	
 	imgC = cvCloneImage((IplImage*)imgB);
@@ -193,7 +196,8 @@ bool extractFeatureKLT(const CvArr * imgA, const CvArr * imgB,
 
 	cvSave("tmp/F.xml", &_F);
 	cvSave("tmp/H1.xml", &_H1);
-	cvSave("tmp/status.xml", _status);
+	cvSave("tmp/F_status.xml", F_status);
+	cvSave("tmp/H_status.xml", H_status);
 	// cvSave("tmp/H2.xml", &_H2);
 	fprintf(stderr, "N: %d\n", N);
 
