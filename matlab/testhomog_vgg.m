@@ -57,7 +57,9 @@ toc
     
     t = .001;  % Distance threshold for deciding outliers
 %    [H, inliers] = ransacfithomography_vgg(x1, x2, t);
-    t = .008;[H, inliers] = ransacfithomography(x1, x2, t);
+    t = .008;
+    t = .02;
+    [H, inliers] = ransacfithomography(x1, x2, t);
 
 tic
     finalmatches = [];finalmatches_h = [];
